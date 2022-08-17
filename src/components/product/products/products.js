@@ -3,7 +3,7 @@ import ProductCard from "../../../common/productCard/productCard";
 import ProductsInfo from "../../../data/productsInfo";
 import "./products.css";
 
-const Products = ({ content, setContent, cartQty, setCartQty, setCartSum }) => {
+const Products = ({ cartQty, setCartQty, setCartSum }) => {
   let navigate = useNavigate();
   const productList = ProductsInfo.map((product) => {
     return (
@@ -11,12 +11,11 @@ const Products = ({ content, setContent, cartQty, setCartQty, setCartSum }) => {
         key={product.id}
         id={product.id}
         category={product.category}
-        url={product.imgUrl}
+        imgUrl={product.imgUrl}
         productName={product.name}
         price={product.price}
         descrioption={product.description}
-        content={content}
-        setContent={setContent}
+        stockQty={product.stockQty}
         cartQty={cartQty}
         setCartQty={setCartQty}
         setCartSum={setCartSum}

@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// import ProductDetails from "../productDetails/productDetails";
 import "./productCard.css";
-// import ProductsInfo from "../../data/productsInfo";
 
 const ProductCard = ({
   id,
-  url,
+  imgUrl,
+  stockQty,
   productName,
   price,
   setCartQty,
@@ -16,16 +15,22 @@ const ProductCard = ({
   const navigate = useNavigate();
 
   const handlePlusOne = () => {
-    setItemQty(itemQty + 1);
-    setCartQty((prev) => {
-      return prev + 1;
-    });
-    setCartSum((prev) => {
-      return prev + price;
-    });
+    if (stockQty > 0) {
+      stockQty -= 1;
+      setItemQty(itemQty + 1);
+      setCartQty((prev) => {
+        return prev + 1;
+      });
+      setCartSum((prev) => {
+        return prev + price;
+      });
+    } else {
+      return;
+    }
   };
 
   const handleMinusOne = () => {
+    stockQty += 1;
     setItemQty(itemQty - 1);
     setCartQty((prev) => {
       return prev - 1;
@@ -39,7 +44,7 @@ const ProductCard = ({
     <div className="productCard-container">
       <div className="product-info">
         <Link to={`/products/${id}`}>
-          <img src={url} alt="" />
+          <img src={imgUrl} alt="" />
         </Link>
 
         <p id="product-name">{productName}</p>

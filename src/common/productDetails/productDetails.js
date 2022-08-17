@@ -12,20 +12,20 @@ const ProductDetails = ({ setCartQty, setCartSum }) => {
   const [itemQty, setItemQty] = useState(0);
 
   const handlePlusOne = () => {
-    // if (findProduct.stockQty > 1){
-
-    // }
-    findProduct.stockQty -= 1;
-    setItemQty(itemQty + 1);
-    setCartQty((prev) => {
-      return prev + 1;
-    });
-    setCartSum((prev) => {
-      return prev + findProduct.price;
-    });
+    if (findProduct.stockQty > 0) {
+      findProduct.stockQty -= 1;
+      setItemQty(itemQty + 1);
+      setCartQty((prev) => {
+        return prev + 1;
+      });
+      setCartSum((prev) => {
+        return prev + findProduct.price;
+      });
+    }
   };
 
   const handleMinusOne = () => {
+    findProduct.stockQty += 1;
     setItemQty(itemQty - 1);
     setCartQty((prev) => {
       return prev - 1;
@@ -37,7 +37,6 @@ const ProductDetails = ({ setCartQty, setCartSum }) => {
   return (
     <div className="product-details">
       <h3>Product Detail</h3>
-
       <div className="product-content">
         <img
           className="product-image"
