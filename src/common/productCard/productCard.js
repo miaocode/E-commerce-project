@@ -1,16 +1,14 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import ProductDetails from "../productDetails/productDetails";
+import { Link, useNavigate } from "react-router-dom";
+// import ProductDetails from "../productDetails/productDetails";
 import "./productCard.css";
-import ProductsInfo from "../../data/productsInfo";
+// import ProductsInfo from "../../data/productsInfo";
 
 const ProductCard = ({
   id,
   url,
   productName,
   price,
-  content,
-  setContent,
   setCartQty,
   setCartSum,
 }) => {
@@ -40,7 +38,10 @@ const ProductCard = ({
   return (
     <div className="productCard-container">
       <div className="product-info">
-        <img onClick={() => setContent("productDetails")} src={url} alt="" />
+        <Link to={`/products/${id}`}>
+          <img src={url} alt="" />
+        </Link>
+
         <p id="product-name">{productName}</p>
         <p id="product-price">${price}</p>
         <div className="button-container">

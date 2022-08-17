@@ -27,7 +27,7 @@ const Header = ({ setVisible, cartQty, cartSum }) => {
       <div className="total-amount">
         <ShoppingCartOutlined />
         <span id="cartQty">{cartQty}</span>
-        <span id="cartAmount">${cartSum}</span>
+        <span id="cartAmount">${cartSum.toFixed(2)}</span>
       </div>
     </div>
   );
