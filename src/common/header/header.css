@@ -1,0 +1,46 @@
+.header-container {
+  color: white;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: row;
+  justify-content: space-evenly;
+  /* align-items: center; */
+  padding: 8px 64px;
+  height: auto;
+  width: 100%;
+  background: #111827;
+}
+#management {
+  font-size: 30px;
+  color: white;
+}
+
+input {
+  width: 350px;
+  height: 48px;
+}
+
+.total-amount {
+  font-size: 15px;
+  padding-top: 15px;
+}
+
+#cartQty {
+  /* font-size: 15px; */
+  background-color: red;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  /* position: fixed; */
+  /* padding-top: -15px;
+  padding-left: 3px; */
+
+  /* margin-left: -10px;
+  margin-bottom: 15px;
+  
+  padding-left: 5px; */
+}
+
+#cartAmount {
+  margin-left: 10px;
+}

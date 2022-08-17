@@ -1,0 +1,10 @@
+.create-product {
+  flex: 1 0 auto;
+  background-color: white;
+  width: 60%;
+  height: 100%;
+  margin: auto;
+  padding: 15px 55px;
+  font-family: sans-serif;
+  font-weight: bold;
+}

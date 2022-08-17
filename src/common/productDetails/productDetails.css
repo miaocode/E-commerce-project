@@ -1,0 +1,34 @@
+.product-details {
+  background-color: white;
+  margin: 50px;
+  padding: 50px;
+  flex: 1 0 auto;
+}
+.product-content {
+  display: flex;
+  /* flex-direction: row; */
+}
+.text-detail {
+  padding: 20px 100px;
+  text-align: left;
+}
+.product-image {
+  width: 50%;
+  height: 50%;
+  padding: 10px;
+}
+
+#out-of-stock {
+  display: inline;
+  padding-left: 50px;
+}
+
+#price {
+  display: inline;
+  font-weight: 800;
+  font-size: large;
+}
+#description {
+  color: gray;
+  padding: 10px 0px;
+}
