@@ -1,17 +1,21 @@
 import { React, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import ProductsInfo from "../../data/productsInfo";
 import "./productDetails.css";
 
 const ProductDetails = ({ setCartQty, setCartSum }) => {
   const { productId } = useParams();
+  const navigate = useNavigate();
   const findProduct = ProductsInfo.find((product) => {
-    console.log(product.id, productId);
     return product.id === productId;
   });
   const [itemQty, setItemQty] = useState(0);
 
   const handlePlusOne = () => {
+    // if (findProduct.stockQty > 1){
+
+    // }
+    findProduct.stockQty -= 1;
     setItemQty(itemQty + 1);
     setCartQty((prev) => {
       return prev + 1;
@@ -45,7 +49,7 @@ const ProductDetails = ({ setCartQty, setCartSum }) => {
           <p>{findProduct.category}</p>
           <h4>{findProduct.productName}</h4>
           <p id="price">${findProduct.price}</p>
-          {/* <p id="out-of-stock">Out of Stock</p> */}
+          {findProduct.stockQty === 0 && <p id="out-of-stock">Out of Stock</p>}
           <p id="description">{findProduct.description}</p>
           {itemQty ? (
             <div>
@@ -55,8 +59,10 @@ const ProductDetails = ({ setCartQty, setCartSum }) => {
             </div>
           ) : (
             <button onClick={handlePlusOne}>Add/Qty</button>
-          )}{" "}
-          <button>Edit</button>
+          )}
+          <Link to={`/editProduct/${productId}`}>
+            <button onClick={() => navigate("editProduct")}>Edit</button>
+          </Link>
         </div>
       </div>
     </div>

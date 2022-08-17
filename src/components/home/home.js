@@ -43,7 +43,7 @@ const Home = () => {
             }
           />
           <Route path="/createProduct" element={<CreateProduct />} />
-          <Route path="/editProduct" element={<EditProduct />} />
+          <Route path="/editProduct/:productId" element={<EditProduct />} />
         </Routes>
       </div>
       <Footer />

@@ -54,8 +54,9 @@ const ProductCard = ({
           ) : (
             <button onClick={handlePlusOne}>Add/Qty</button>
           )}
-
-          <button onClick={() => navigate("editProduct")}>Edit</button>
+          <Link to={`/editProduct/${id}`}>
+            <button onClick={() => navigate("editProduct")}>Edit</button>
+          </Link>
         </div>
       </div>
     </div>

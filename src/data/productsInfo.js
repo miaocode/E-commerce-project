@@ -4,6 +4,7 @@ const ProductsInfo = [
     name: "Apple AirPods Pro",
     category: "Electronics",
     price: 179.99,
+    stockQty: 1,
     description:
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut facilis, architecto consequuntur et ipsa nobis vero maxime nesciunt ipsam voluptas quam praesentium fugit est quis repudiandae aperiam obcaecati quae incidunt. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae illum ullam reiciendis laudantium officiis facilis ad, quos sed eius recusandae aliquid quibusdam cupiditate quam sapiente aut? Nobis explicabo ipsum cupiditate!",
     imgUrl:
@@ -14,6 +15,7 @@ const ProductsInfo = [
     name: "Apple Watch Series 3 GPS Space Gray",
     category: "Electronics",
     price: 149,
+    stockQty: 5,
     description:
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut facilis, architecto consequuntur et ipsa nobis vero maxime nesciunt ipsam voluptas quam praesentium fugit est quis repudiandae aperiam obcaecati quae incidunt. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae illum ullam reiciendis laudantium officiis facilis ad, quos sed eius recusandae aliquid quibusdam cupiditate quam sapiente aut? Nobis explicabo ipsum cupiditate!",
     imgUrl:
@@ -24,6 +26,7 @@ const ProductsInfo = [
     name: "Crayola Broad Line Markers, 10 Count",
     category: "Office Supplies",
     price: 0.97,
+    stockQty: 15,
     description:
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut facilis, architecto consequuntur et ipsa nobis vero maxime nesciunt ipsam voluptas quam praesentium fugit est quis repudiandae aperiam obcaecati quae incidunt. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae illum ullam reiciendis laudantium officiis facilis ad, quos sed eius recusandae aliquid quibusdam cupiditate quam sapiente aut? Nobis explicabo ipsum cupiditate!",
     imgUrl:
@@ -34,6 +37,7 @@ const ProductsInfo = [
     name: "Pen + Gear No. 2 Wood Pencils, Sharpened, 48 Count",
     category: "Office Supplies",
     price: 3.88,
+    stockQty: 15,
     description:
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut facilis, architecto consequuntur et ipsa nobis vero maxime nesciunt ipsam voluptas quam praesentium fugit est quis repudiandae aperiam obcaecati quae incidunt. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae illum ullam reiciendis laudantium officiis facilis ad, quos sed eius recusandae aliquid quibusdam cupiditate quam sapiente aut? Nobis explicabo ipsum cupiditate!",
     imgUrl:
@@ -44,6 +48,7 @@ const ProductsInfo = [
     name: "Big Joe Roma Bean Bag Chair, Moonstone Tessellation",
     category: "Furniture",
     price: 54.36,
+    stockQty: 2,
     description:
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut facilis, architecto consequuntur et ipsa nobis vero maxime nesciunt ipsam voluptas quam praesentium fugit est quis repudiandae aperiam obcaecati quae incidunt. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae illum ullam reiciendis laudantium officiis facilis ad, quos sed eius recusandae aliquid quibusdam cupiditate quam sapiente aut? Nobis explicabo ipsum cupiditate!",
     imgUrl:
@@ -54,6 +59,7 @@ const ProductsInfo = [
     name: "Spa Sensations by Zinus Serenity Memory Foam Mattress, Twin",
     category: "Furniture",
     price: 159.0,
+    stockQty: 3,
     description:
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut facilis, architecto consequuntur et ipsa nobis vero maxime nesciunt ipsam voluptas quam praesentium fugit est quis repudiandae aperiam obcaecati quae incidunt. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae illum ullam reiciendis laudantium officiis facilis ad, quos sed eius recusandae aliquid quibusdam cupiditate quam sapiente aut? Nobis explicabo ipsum cupiditate!",
     imgUrl:
@@ -64,6 +70,7 @@ const ProductsInfo = [
     name: "LEGO Creator 3in1 Fish Tank",
     category: "Toy",
     price: 29.97,
+    stockQty: 5,
     description:
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut facilis, architecto consequuntur et ipsa nobis vero maxime nesciunt ipsam voluptas quam praesentium fugit est quis repudiandae aperiam obcaecati quae incidunt. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae illum ullam reiciendis laudantium officiis facilis ad, quos sed eius recusandae aliquid quibusdam cupiditate quam sapiente aut? Nobis explicabo ipsum cupiditate!",
     imgUrl:
@@ -74,6 +81,7 @@ const ProductsInfo = [
     name: "LEGO Creator 3in1 Crocodile ",
     category: "Toy",
     price: 29.97,
+    stockQty: 15,
     description:
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut facilis, architecto consequuntur et ipsa nobis vero maxime nesciunt ipsam voluptas quam praesentium fugit est quis repudiandae aperiam obcaecati quae incidunt. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae illum ullam reiciendis laudantium officiis facilis ad, quos sed eius recusandae aliquid quibusdam cupiditate quam sapiente aut? Nobis explicabo ipsum cupiditate!",
     imgUrl:
@@ -84,6 +92,7 @@ const ProductsInfo = [
     name: "Hotel Style Egyptian Cotton Towel 10-Piece Set",
     category: "Home",
     price: 19.97,
+    stockQty: 15,
     description:
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut facilis, architecto consequuntur et ipsa nobis vero maxime nesciunt ipsam voluptas quam praesentium fugit est quis repudiandae aperiam obcaecati quae incidunt. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae illum ullam reiciendis laudantium officiis facilis ad, quos sed eius recusandae aliquid quibusdam cupiditate quam sapiente aut? Nobis explicabo ipsum cupiditate!",
     imgUrl:
@@ -94,6 +103,7 @@ const ProductsInfo = [
     name: "Qualiazero Rectangular Step Garbage Can 3 Piece Combo",
     category: "Home",
     price: 55.0,
+    stockQty: 10,
     description:
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut facilis, architecto consequuntur et ipsa nobis vero maxime nesciunt ipsam voluptas quam praesentium fugit est quis repudiandae aperiam obcaecati quae incidunt. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae illum ullam reiciendis laudantium officiis facilis ad, quos sed eius recusandae aliquid quibusdam cupiditate quam sapiente aut? Nobis explicabo ipsum cupiditate!",
     imgUrl:
