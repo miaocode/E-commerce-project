@@ -7,9 +7,9 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  height: 350px;
+  /* height: 350px; */
   position: relative;
-  border: solid black 1px;
+  /* border: solid black 1px; */
 }
 
 img {
