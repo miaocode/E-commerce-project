@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import EmailInput from "../../../../common/input/emailInput";
 import { LOGIN_FORM } from "../../../../content/form";
 
@@ -7,20 +7,20 @@ const ResetPasswordModalContent = ({
   setUserInfo,
   setModalContent,
 }) => {
+  const [email, setEmail] = useState("");
   const EMAIL_REGEX =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   const handleClick = () => {
-    const checkEmail = EMAIL_REGEX.test(userInfo.email);
+    const checkEmail = EMAIL_REGEX.test(email);
     if (!checkEmail) {
       alert("Invalid Email!");
     } else {
-      setUserInfo({ email: "", password: "" });
+      setEmail("");
       setModalContent({
         modalStatus: "passwordLink",
         modalTitle: "",
       });
-      setUserInfo({ email: "", password: "" });
     }
   };
   return (
@@ -28,13 +28,8 @@ const ResetPasswordModalContent = ({
       <EmailInput
         label={LOGIN_FORM.EMAIL.LABEL}
         type={LOGIN_FORM.EMAIL.TYPE}
-        value={userInfo.email}
-        onChange={(e) =>
-          setUserInfo((prevState) => ({
-            ...prevState,
-            email: e.target.value,
-          }))
-        }
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
       />
       <button
         type="button"

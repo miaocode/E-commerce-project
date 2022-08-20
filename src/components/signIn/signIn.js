@@ -5,14 +5,14 @@ import SignUpModalContent from "../signIn/modalContent/signUpModalContent/signUp
 import ResetPasswordModalContent from "../signIn/modalContent/resetPasswordModalContent/resetPasswordModalContent";
 import PasswordLink from "../signIn/passwordLink/passwordLink";
 
-const SignIn = ({ visible, setVisible }) => {
+const SignIn = ({ visible, setVisible, setIsLoggedIn }) => {
   const [modalContent, setModalContent] = useState({
     modalStatus: "signIn",
     modalTitle: "Sign In",
   });
-  const [userInfo, setUserInfo] = useState({
-    email: "",
-    password: "",
+  const [userInfo, setUserInfo] = useState([], () => {
+    const localData = localStorage.getItem("users");
+    return localData ? JSON.parse(localData) : [];
   });
 
   const selectModalContent = (modalStatus) => {
@@ -23,6 +23,8 @@ const SignIn = ({ visible, setVisible }) => {
             userInfo={userInfo}
             setUserInfo={setUserInfo}
             setModalContent={setModalContent}
+            setVisible={setVisible}
+            setIsLoggedIn={setIsLoggedIn}
           />
         );
       case "signUp":
@@ -31,6 +33,7 @@ const SignIn = ({ visible, setVisible }) => {
             userInfo={userInfo}
             setUserInfo={setUserInfo}
             setModalContent={setModalContent}
+            setVisible={setVisible}
           />
         );
       case "resetPassword":

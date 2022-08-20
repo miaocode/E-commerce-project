@@ -6,14 +6,16 @@ import { LOGIN_FORM } from "../../../../content/form";
 // import mockAPI from "../mockAPI/mockAPI";
 
 const SignInModalContent = ({ userInfo, setUserInfo, setModalContent }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const EMAIL_REGEX =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   const PWD_REGEX =
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 
-  const handleSubmit = () => {
-    const checkEmail = EMAIL_REGEX.test(userInfo.email);
-    const checkPassword = PWD_REGEX.test(userInfo.password);
+  const handleSignIn = () => {
+    const checkEmail = EMAIL_REGEX.test(email);
+    const checkPassword = PWD_REGEX.test(password);
     if (!checkEmail && !checkPassword) {
       alert("Invalid Email and Password ");
     } else if (!checkEmail) {
@@ -25,9 +27,10 @@ const SignInModalContent = ({ userInfo, setUserInfo, setModalContent }) => {
     }
   };
 
-  const handleClick = () => {
+  const handleSignUp = () => {
     setModalContent({ modalStatus: "signUp", modalTitle: "Sign Up" });
-    setUserInfo({ email: "", password: "" });
+    setEmail("");
+    setPassword("");
   };
 
   return (
@@ -36,38 +39,28 @@ const SignInModalContent = ({ userInfo, setUserInfo, setModalContent }) => {
         <EmailInput
           label={LOGIN_FORM.EMAIL.LABEL}
           type={LOGIN_FORM.EMAIL.TYPE}
-          value={userInfo.email}
-          onChange={(e) =>
-            setUserInfo((prevState) => ({
-              ...prevState,
-              email: e.target.value,
-            }))
-          }
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <PasswordInput
           label={LOGIN_FORM.PASSWORD.LABEL}
           type={LOGIN_FORM.PASSWORD.TYPE}
-          value={userInfo.password}
+          value={password}
           minLength={8}
           maxLength={30}
-          onChange={(e) =>
-            setUserInfo((prevState) => ({
-              ...prevState,
-              password: e.target.value,
-            }))
-          }
+          onChange={(e) => setPassword(e.target.value)}
         />
         <button
           type="button"
           className="btn btn-primary btn-lg btn-block"
-          onClick={handleSubmit}
+          onClick={handleSignIn}
         >
           Sign In
         </button>
       </div>
       <div>
         Don't have an account?
-        <a href="#" className="link-primary" onClick={handleClick}>
+        <a href="#" className="link-primary" onClick={handleSignUp}>
           Sign up
         </a>
         <span className="forgot-password">

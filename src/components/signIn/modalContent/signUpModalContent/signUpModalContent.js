@@ -1,25 +1,34 @@
-import React, { useState } from "react";
+import { React, useEffect, useState } from "react";
 import EmailInput from "../../../../common/input/emailInput";
 import PasswordInput from "../../../../common/input/passwordInput";
 import { LOGIN_FORM } from "../../../../content/form";
 
-//import mockAPI from "../mockAPI/mockAPI";
-
-const SignUpModalContent = ({ userInfo, setUserInfo, setModalContent }) => {
-  const handleClick = () => {
-    setModalContent({ modalStatus: "signIn", modalTitle: "Sign In" });
-    setUserInfo({ email: "", password: "" });
-  };
-
+const SignUpModalContent = ({
+  userInfo,
+  setUserInfo,
+  setModalContent,
+  setVisible,
+}) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const EMAIL_REGEX =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   const PWD_REGEX =
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const checkEmail = EMAIL_REGEX.test(userInfo.email);
-    const checkPassword = PWD_REGEX.test(userInfo.password);
+  // useEffect(() => {
+  //   console.log(localStorage.setItem("users");
+  // }, [])
+
+  // useEffect(() => {
+  //   localStorage.setItem("users", JSON.stringify(userInfo));
+  //   console.log(localStorage.getItem("users"));
+  // }, [userInfo]);
+
+  const handleSignUp = () => {
+    const checkEmail = EMAIL_REGEX.test(email);
+    const checkPassword = PWD_REGEX.test(password);
+
     if (!checkEmail && !checkPassword) {
       alert("Invalid Email and Password ");
     } else if (!checkEmail) {
@@ -28,36 +37,41 @@ const SignUpModalContent = ({ userInfo, setUserInfo, setModalContent }) => {
       alert(
         "Password must at least eight characters and contain one letter, one number and one special character!"
       );
+    } else {
+      setUserInfo((userInfo) => {
+        return [...userInfo, { email: email, password: password }];
+      });
+
+      alert("You have been sucessfully signed up!");
+      setVisible(false);
     }
   };
+
+  const handleClick = () => {
+    setModalContent({ modalStatus: "signIn", modalTitle: "Sign In" });
+    setEmail("");
+    setPassword("");
+  };
+
   return (
     <>
       <EmailInput
         label={LOGIN_FORM.EMAIL.LABEL}
         type={LOGIN_FORM.EMAIL.TYPE}
-        value={userInfo.email}
-        onChange={(e) =>
-          setUserInfo((prevState) => ({
-            ...prevState,
-            email: e.target.value,
-          }))
-        }
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
       />
       <PasswordInput
         label={LOGIN_FORM.PASSWORD.LABEL}
         type={LOGIN_FORM.PASSWORD.TYPE}
-        value={userInfo.password}
-        onChange={(e) =>
-          setUserInfo((prevState) => ({
-            ...prevState,
-            password: e.target.value,
-          }))
-        }
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
       />
       <button
         type="button"
         className="btn btn-primary btn-lg btn-block"
-        onClick={handleSubmit}
+        onClick={handleSignUp}
+        // onClick={() => signUp(dispatch)(userInfo)}
       >
         Create account
       </button>

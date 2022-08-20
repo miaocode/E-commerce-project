@@ -4,7 +4,7 @@ import { Button } from "antd";
 import { LOGIN_FORM } from "../../content/form";
 import "./header.css";
 
-const Header = ({ setVisible, cartQty, cartSum }) => {
+const Header = ({ setVisible, isLoggedIn, cartQty, cartSum }) => {
   return (
     <div className="header-container">
       <h1 id="management">Management</h1>
@@ -20,7 +20,7 @@ const Header = ({ setVisible, cartQty, cartSum }) => {
           }}
         >
           <UserOutlined />
-          {LOGIN_FORM.SIGNIN}
+          {isLoggedIn ? LOGIN_FORM.SIGNOUT : LOGIN_FORM.SIGNIN}
         </Button>
       </div>
       <div className="cart-icon"></div>
