@@ -10,6 +10,7 @@ const ProductCard = ({
   price,
   setCartQty,
   setCartSum,
+  isLoggedIn,
 }) => {
   const [itemQty, setItemQty] = useState(0);
   const navigate = useNavigate();
@@ -59,9 +60,11 @@ const ProductCard = ({
           ) : (
             <button onClick={handlePlusOne}>Add/Qty</button>
           )}
-          <Link to={`/editProduct/${id}`}>
-            <button onClick={() => navigate("editProduct")}>Edit</button>
-          </Link>
+          {isLoggedIn && (
+            <Link to={`/editProduct/${id}`}>
+              <button onClick={() => navigate("editProduct")}>Edit</button>
+            </Link>
+          )}
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import MyHeader from "../../common/header/header";
 import SignIn from "../signIn/signIn";
@@ -17,6 +17,8 @@ const Home = () => {
   const [cartQty, setCartQty] = useState(0);
   const [cartSum, setCartSum] = useState(0);
 
+  useEffect(() => {});
+
   return (
     <div className="body">
       <MyHeader
@@ -28,6 +30,7 @@ const Home = () => {
       <SignIn
         visible={visible}
         setVisible={setVisible}
+        isLoggedIn={isLoggedIn}
         setIsLoggedIn={setIsLoggedIn}
         setUser={setUser}
       />
@@ -38,6 +41,7 @@ const Home = () => {
             path="/products"
             element={
               <Products
+                isLoggedIn={isLoggedIn}
                 cartQty={cartQty}
                 setCartQty={setCartQty}
                 setCartSum={setCartSum}
@@ -48,6 +52,7 @@ const Home = () => {
             path="/products/:productId"
             element={
               <ProductDetails
+                isLoggedIn={isLoggedIn}
                 cartQty={cartQty}
                 setCartQty={setCartQty}
                 setCartSum={setCartSum}

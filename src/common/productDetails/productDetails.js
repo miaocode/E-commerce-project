@@ -3,7 +3,7 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 import ProductsInfo from "../../data/productsInfo";
 import "./productDetails.css";
 
-const ProductDetails = ({ setCartQty, setCartSum }) => {
+const ProductDetails = ({ isLoggedIn, setCartQty, setCartSum }) => {
   const { productId } = useParams();
   const navigate = useNavigate();
   const findProduct = ProductsInfo.find((product) => {
@@ -59,9 +59,11 @@ const ProductDetails = ({ setCartQty, setCartSum }) => {
           ) : (
             <button onClick={handlePlusOne}>Add/Qty</button>
           )}
-          <Link to={`/editProduct/${productId}`}>
-            <button onClick={() => navigate("editProduct")}>Edit</button>
-          </Link>
+          {isLoggedIn && (
+            <Link to={`/editProduct/${productId}`}>
+              {<button onClick={() => navigate("editProduct")}>Edit</button>}
+            </Link>
+          )}
         </div>
       </div>
     </div>

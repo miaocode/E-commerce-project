@@ -27,11 +27,24 @@ app.post("/api/register", async (req, res) => {
       email: req.body.email,
       password: req.body.password,
     });
-
     const savedUser = await newUser.save();
     res.status(200).json("You have been signed up!");
   } catch (err) {
     res.status(400).json(err);
+  }
+});
+
+//SignIn
+app.post("/api/signin", async (req, res) => {
+  const user = await User.findOne({
+    email: req.body.email,
+  });
+  if (!user) {
+    return res.status(401).json("Invalid email!");
+  } else if (user.password === req.body.password) {
+    return res.status(200).json(user);
+  } else {
+    return res.status(401).json("Incorrect password!");
   }
 });
 

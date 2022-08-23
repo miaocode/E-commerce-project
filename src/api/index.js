@@ -11,4 +11,15 @@ const registerUser = async (userInfo) => {
   return res;
 };
 
-export default { registerUser };
+const signIn = async (userInfo) => {
+  const res = await fetch("http://localhost:8080/api/signin", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(userInfo),
+  });
+  return res;
+};
+
+export default { registerUser, signIn };

@@ -1,15 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PopupModal from "../../common/popupModal/popupModal";
 import SignInModalContent from "../signIn/modalContent/signInModalContent/signInModalContent";
 import SignUpModalContent from "../signIn/modalContent/signUpModalContent/signUpModalContent";
 import ResetPasswordModalContent from "../signIn/modalContent/resetPasswordModalContent/resetPasswordModalContent";
 import PasswordLink from "../signIn/passwordLink/passwordLink";
 
-const SignIn = ({ visible, setVisible, setIsLoggedIn, user, setUser }) => {
+const SignIn = ({
+  visible,
+  setVisible,
+  isLoggedIn,
+  setIsLoggedIn,
+  user,
+  setUser,
+}) => {
   const [modalContent, setModalContent] = useState({
     modalStatus: "signIn",
     modalTitle: "Sign In",
   });
+
+  useEffect(() => {
+    setIsLoggedIn(localStorage.getItem("setIsLoggedIn"));
+  }, [isLoggedIn]);
 
   const selectModalContent = (modalStatus) => {
     switch (modalStatus) {
@@ -20,6 +31,7 @@ const SignIn = ({ visible, setVisible, setIsLoggedIn, user, setUser }) => {
             setUser={setUser}
             setModalContent={setModalContent}
             setVisible={setVisible}
+            isLoggedIn={isLoggedIn}
             setIsLoggedIn={setIsLoggedIn}
           />
         );
