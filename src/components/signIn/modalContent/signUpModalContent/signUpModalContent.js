@@ -2,13 +2,9 @@ import { React, useEffect, useState } from "react";
 import EmailInput from "../../../../common/input/emailInput";
 import PasswordInput from "../../../../common/input/passwordInput";
 import { LOGIN_FORM } from "../../../../content/form";
+import api from "../../../../api/index";
 
-const SignUpModalContent = ({
-  userInfo,
-  setUserInfo,
-  setModalContent,
-  setVisible,
-}) => {
+const SignUpModalContent = ({ user, setUser, setModalContent, setVisible }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const EMAIL_REGEX =
@@ -16,16 +12,7 @@ const SignUpModalContent = ({
   const PWD_REGEX =
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 
-  // useEffect(() => {
-  //   console.log(localStorage.setItem("users");
-  // }, [])
-
-  // useEffect(() => {
-  //   localStorage.setItem("users", JSON.stringify(userInfo));
-  //   console.log(localStorage.getItem("users"));
-  // }, [userInfo]);
-
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
     const checkEmail = EMAIL_REGEX.test(email);
     const checkPassword = PWD_REGEX.test(password);
 
@@ -37,13 +24,18 @@ const SignUpModalContent = ({
       alert(
         "Password must at least eight characters and contain one letter, one number and one special character!"
       );
-    } else {
-      setUserInfo((userInfo) => {
-        return [...userInfo, { email: email, password: password }];
+    }
+    try {
+      const res = await api.registerUser({
+        email: email,
+        password: password,
       });
 
-      alert("You have been sucessfully signed up!");
+      alert("You have been signed up!");
       setVisible(false);
+    } catch (error) {
+      console.log(error);
+      alert("Something went wrong...");
     }
   };
 

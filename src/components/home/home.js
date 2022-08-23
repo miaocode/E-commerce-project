@@ -13,6 +13,7 @@ import Default from "../default/default";
 const Home = () => {
   const [visible, setVisible] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState({});
   const [cartQty, setCartQty] = useState(0);
   const [cartSum, setCartSum] = useState(0);
 
@@ -28,10 +29,11 @@ const Home = () => {
         visible={visible}
         setVisible={setVisible}
         setIsLoggedIn={setIsLoggedIn}
+        setUser={setUser}
       />
       <div className="routes">
         <Routes>
-          <Route path="/" element={<Default />} />
+          {/* <Route path="/" element={<Default />} /> */}
           <Route
             path="/products"
             element={

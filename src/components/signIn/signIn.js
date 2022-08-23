@@ -5,14 +5,10 @@ import SignUpModalContent from "../signIn/modalContent/signUpModalContent/signUp
 import ResetPasswordModalContent from "../signIn/modalContent/resetPasswordModalContent/resetPasswordModalContent";
 import PasswordLink from "../signIn/passwordLink/passwordLink";
 
-const SignIn = ({ visible, setVisible, setIsLoggedIn }) => {
+const SignIn = ({ visible, setVisible, setIsLoggedIn, user, setUser }) => {
   const [modalContent, setModalContent] = useState({
     modalStatus: "signIn",
     modalTitle: "Sign In",
-  });
-  const [userInfo, setUserInfo] = useState([], () => {
-    const localData = localStorage.getItem("users");
-    return localData ? JSON.parse(localData) : [];
   });
 
   const selectModalContent = (modalStatus) => {
@@ -20,8 +16,8 @@ const SignIn = ({ visible, setVisible, setIsLoggedIn }) => {
       case "signIn":
         return (
           <SignInModalContent
-            userInfo={userInfo}
-            setUserInfo={setUserInfo}
+            user={user}
+            setUser={setUser}
             setModalContent={setModalContent}
             setVisible={setVisible}
             setIsLoggedIn={setIsLoggedIn}
@@ -30,8 +26,8 @@ const SignIn = ({ visible, setVisible, setIsLoggedIn }) => {
       case "signUp":
         return (
           <SignUpModalContent
-            userInfo={userInfo}
-            setUserInfo={setUserInfo}
+            user={user}
+            setUser={setUser}
             setModalContent={setModalContent}
             setVisible={setVisible}
           />
@@ -39,8 +35,8 @@ const SignIn = ({ visible, setVisible, setIsLoggedIn }) => {
       case "resetPassword":
         return (
           <ResetPasswordModalContent
-            userInfo={userInfo}
-            setUserInfo={setUserInfo}
+            user={user}
+            setUser={setUser}
             setModalContent={setModalContent}
           />
         );
@@ -49,8 +45,8 @@ const SignIn = ({ visible, setVisible, setIsLoggedIn }) => {
       default:
         return (
           <SignInModalContent
-            userInfo={userInfo}
-            setUserInfo={setUserInfo}
+            user={user}
+            setUser={setUser}
             setModalContent={setModalContent}
           />
         );
