@@ -1,15 +1,33 @@
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ProductCard from "../../../common/productCard/productCard";
-import ProductsInfo from "../../../data/productsInfo";
+import api from "../../../api/index";
 import "./products.css";
 
 const Products = ({ isLoggedIn, cartQty, setCartQty, setCartSum }) => {
+  const [product, setProduct] = useState([]);
+  const [filters, setFilters] = useState({});
+  const [sort, setSort] = useState("price");
   let navigate = useNavigate();
-  const productList = ProductsInfo.map((product) => {
+
+  useEffect(() => {
+    const getAllProduct = async () => {
+      try {
+        const res = await api.getProducts();
+        const data = await res.json();
+        setProduct(data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getAllProduct();
+  }, []);
+
+  const productList = product.map((product) => {
     return (
       <ProductCard
-        key={product.id}
-        id={product.id}
+        key={product._id}
+        id={product._id}
         category={product.category}
         imgUrl={product.imgUrl}
         productName={product.name}
@@ -23,7 +41,6 @@ const Products = ({ isLoggedIn, cartQty, setCartQty, setCartSum }) => {
       />
     );
   });
-
   return (
     <main>
       <h3>Products</h3>
@@ -39,7 +56,17 @@ const Products = ({ isLoggedIn, cartQty, setCartQty, setCartSum }) => {
           Add Product
         </button>
       )}
-
+      <select onChange={(e) => setSort(e.target.value)}>
+        <option key="1" value="newest">
+          Newest
+        </option>
+        <option key="2" value="asc">
+          Price (low to high)
+        </option>
+        <option key="3" value="desc">
+          Price (high to low)
+        </option>
+      </select>
       <div className="products-container">{productList}</div>
     </main>
   );

@@ -9,3 +9,9 @@ main {
   column-gap: 8px;
   row-gap: 50px;
 }
+
+select {
+  display: block;
+  margin-left: auto;
+  margin-right: 0;
+}

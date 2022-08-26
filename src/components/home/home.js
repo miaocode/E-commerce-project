@@ -13,11 +13,12 @@ import Default from "../default/default";
 const Home = () => {
   const [visible, setVisible] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [products, setProducts] = useState([]);
   const [user, setUser] = useState({});
   const [cartQty, setCartQty] = useState(0);
   const [cartSum, setCartSum] = useState(0);
 
-  useEffect(() => {});
+  // useEffect(() => {});
 
   return (
     <div className="body">
@@ -49,7 +50,7 @@ const Home = () => {
             }
           ></Route>
           <Route
-            path="/products/:productId"
+            path="/products/:id"
             element={
               <ProductDetails
                 isLoggedIn={isLoggedIn}
@@ -60,7 +61,7 @@ const Home = () => {
             }
           />
           <Route path="/createProduct" element={<CreateProduct />} />
-          <Route path="/editProduct/:productId" element={<EditProduct />} />
+          <Route path="/editProduct/:id" element={<EditProduct />} />
         </Routes>
       </div>
       <Footer />

@@ -1,66 +1,74 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
-import ProductsInfo from "../../data/productsInfo";
+import { useDispatch } from "react-redux";
+import { addOneProduct, removeOneProduct } from "../../redux/cartRedux";
 import "./productDetails.css";
 
-const ProductDetails = ({ isLoggedIn, setCartQty, setCartSum }) => {
-  const { productId } = useParams();
+const ProductDetails = ({ isLoggedIn }) => {
+  const { id } = useParams();
+  const [product, setProduct] = useState({});
+  const [quantity, setQuantity] = useState(0);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const findProduct = ProductsInfo.find((product) => {
-    return product.id === productId;
-  });
-  const [itemQty, setItemQty] = useState(0);
 
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const res = await fetch(`http://localhost:8080/api/products/${id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await res.json();
+        setProduct(data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getProduct();
+  }, [id]);
+
+  const handleChange = (num) => {};
   const handlePlusOne = () => {
-    if (findProduct.stockQty > 0) {
-      findProduct.stockQty -= 1;
-      setItemQty(itemQty + 1);
-      setCartQty((prev) => {
-        return prev + 1;
-      });
-      setCartSum((prev) => {
-        return prev + findProduct.price;
-      });
-    }
+    setQuantity(quantity + 1, () => {
+      dispatch(addOneProduct({ ...product, quantity }));
+    });
   };
 
   const handleMinusOne = () => {
-    findProduct.stockQty += 1;
-    setItemQty(itemQty - 1);
-    setCartQty((prev) => {
-      return prev - 1;
-    });
-    setCartSum((prev) => {
-      return prev - findProduct.price;
+    setQuantity(quantity - 1, () => {
+      dispatch(addOneProduct({ ...product, quantity }));
     });
   };
+  console.log(quantity);
   return (
     <div className="product-details">
       <h3>Product Detail</h3>
       <div className="product-content">
         <img
           className="product-image"
-          src={findProduct.imgUrl}
-          alt={findProduct.productName}
+          src={product.imgUrl}
+          alt={product.productName}
         />
 
         <div className="text-detail">
-          <p>{findProduct.category}</p>
-          <h4>{findProduct.productName}</h4>
-          <p id="price">${findProduct.price}</p>
-          {findProduct.stockQty === 0 && <p id="out-of-stock">Out of Stock</p>}
-          <p id="description">{findProduct.description}</p>
-          {itemQty ? (
+          <p>{product.category}</p>
+          <h4>{product.productName}</h4>
+          <p id="price">${product.price}</p>
+          {product.stockQty === 0 && <p id="out-of-stock">Out of Stock</p>}
+          <p id="description">{product.description}</p>
+          {quantity ? (
             <div>
-              <button onClick={handleMinusOne}>-</button>
-              <span>{itemQty}</span>
-              <button onClick={handlePlusOne}>+</button>
+              <button onClick={handleChange(1)}>-</button>
+              <span>{quantity}</span>
+              <button onClick={handleChange(-1)}>+</button>
             </div>
           ) : (
             <button onClick={handlePlusOne}>Add/Qty</button>
           )}
           {isLoggedIn && (
-            <Link to={`/editProduct/${productId}`}>
+            <Link to={`/editProduct/${id}`}>
               {<button onClick={() => navigate("editProduct")}>Edit</button>}
             </Link>
           )}

@@ -1,5 +1,8 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addOneProduct, removeOneProduct } from "../../redux/cartRedux";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import api from "../../api";
 import "./productCard.css";
 
 const ProductCard = ({
@@ -12,33 +15,19 @@ const ProductCard = ({
   setCartSum,
   isLoggedIn,
 }) => {
-  const [itemQty, setItemQty] = useState(0);
+  const [product, setProduct] = useState({});
+  const [quantity, setQuantity] = useState(0);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handlePlusOne = () => {
-    if (stockQty > 0) {
-      stockQty -= 1;
-      setItemQty(itemQty + 1);
-      setCartQty((prev) => {
-        return prev + 1;
-      });
-      setCartSum((prev) => {
-        return prev + price;
-      });
-    } else {
-      return;
-    }
+    setQuantity(quantity + 1);
+    dispatch(addOneProduct({ ...product, quantity }));
   };
 
   const handleMinusOne = () => {
-    stockQty += 1;
-    setItemQty(itemQty - 1);
-    setCartQty((prev) => {
-      return prev - 1;
-    });
-    setCartSum((prev) => {
-      return prev - price;
-    });
+    setQuantity(quantity - 1);
+    dispatch(removeOneProduct({ ...product, quantity }));
   };
 
   return (
@@ -51,10 +40,10 @@ const ProductCard = ({
         <p id="product-name">{productName}</p>
         <p id="product-price">${price}</p>
         <div className="button-container">
-          {itemQty ? (
+          {quantity ? (
             <div>
               <button onClick={handleMinusOne}>-</button>
-              <span>{itemQty}</span>
+              <span>{quantity}</span>
               <button onClick={handlePlusOne}>+</button>
             </div>
           ) : (

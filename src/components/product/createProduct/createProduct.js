@@ -1,4 +1,5 @@
 import React from "react";
+import api from "../../../api/index";
 //import { PlusOutlined } from "@ant-design/icons";
 import { Form, Input, Button, Select, InputNumber } from "antd";
 import { Image } from "antd";
@@ -7,11 +8,26 @@ import "./createProduct.css";
 const { TextArea } = Input;
 const { Search } = Input;
 const onSearch = (value) => console.log(value);
+
 const CreateProduct = () => {
+  const onFinish = async (values) => {
+    console.log(values);
+    try {
+      const res = await api.createProduct({
+        values: values,
+      });
+
+      alert("Product created!");
+    } catch (error) {
+      console.log(error);
+      alert("Something went wrong...");
+    }
+  };
+  console.log(Form.initialValues);
   return (
     <div className="create-product">
       <h3>Create Product</h3>
-      <Form className="product-form" layout="vertical">
+      <Form className="product-form" layout="vertical" onFinish={onFinish}>
         <Form.Item label="Product Name">
           <Input />
         </Form.Item>

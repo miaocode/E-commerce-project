@@ -47,7 +47,6 @@ const SignInModalContent = ({
     const data = await res.json();
 
     if (data.email) {
-      console.log(data.email);
       await localStorage.setItem("setIsLoggedIn", JSON.stringify(true));
       alert("Welcome back!");
       setIsLoggedIn(true);
