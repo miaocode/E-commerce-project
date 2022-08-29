@@ -1,16 +1,25 @@
 import React from "react";
-import "antd/dist/antd.css";
+import { useDispatch } from "react-redux";
+import {
+  setAccountModalVisible,
+  setAccountModalContent,
+} from "../../redux/modalReducer";
 import { Modal } from "antd";
 import { CloseCircleOutlined } from "@ant-design/icons";
+import "antd/dist/antd.css";
 import "./popupModal.css";
 
-const PopupModal = ({ modalContent, visible, handleOnCancel, children }) => {
+const PopupModal = ({ visible, children }) => {
+  const dispatch = useDispatch();
+  const handleOnCancel = () => {
+    dispatch(setAccountModalVisible(false));
+    dispatch(setAccountModalContent("signIn"));
+  };
   return (
     <Modal
       width={393}
-      closeIcon={<CloseCircleOutlined />}
-      title={<div className="modal-title">{modalContent.modalTitle}</div>}
       visible={visible}
+      closeIcon={<CloseCircleOutlined />}
       footer={null}
       onCancel={handleOnCancel}
     >

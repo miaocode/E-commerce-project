@@ -6,8 +6,6 @@ import "./products.css";
 
 const Products = ({ isLoggedIn, cartQty, setCartQty, setCartSum }) => {
   const [product, setProduct] = useState([]);
-  const [filters, setFilters] = useState({});
-  const [sort, setSort] = useState("price");
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -56,17 +54,7 @@ const Products = ({ isLoggedIn, cartQty, setCartQty, setCartSum }) => {
           Add Product
         </button>
       )}
-      <select onChange={(e) => setSort(e.target.value)}>
-        <option key="1" value="newest">
-          Newest
-        </option>
-        <option key="2" value="asc">
-          Price (low to high)
-        </option>
-        <option key="3" value="desc">
-          Price (high to low)
-        </option>
-      </select>
+
       <div className="products-container">{productList}</div>
     </main>
   );

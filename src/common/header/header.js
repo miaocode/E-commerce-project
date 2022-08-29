@@ -3,11 +3,20 @@ import { UserOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { LOGIN_FORM } from "../../content/form";
 import "./header.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  setAccountModalContent,
+  setAccountModalVisible,
+} from "../../redux/modalReducer";
 
 const Header = ({ setVisible, isLoggedIn }) => {
   const quantity = useSelector((state) => state.cart.quantity);
   const total = useSelector((state) => state.cart.total);
+  const dispatch = useDispatch();
+  const handleClick = () => {
+    dispatch(setAccountModalVisible(true), setAccountModalContent("signIn"));
+  };
+
   return (
     <div className="header-container">
       <h1 id="management">Management</h1>
@@ -16,12 +25,7 @@ const Header = ({ setVisible, isLoggedIn }) => {
         <input placeholder="Search" />
       </div>
       <div className="signin-button">
-        <Button
-          type="primary"
-          onClick={() => {
-            setVisible(true);
-          }}
-        >
+        <Button type="primary" onClick={handleClick}>
           <UserOutlined />
           {isLoggedIn ? LOGIN_FORM.SIGNOUT : LOGIN_FORM.SIGNIN}
         </Button>

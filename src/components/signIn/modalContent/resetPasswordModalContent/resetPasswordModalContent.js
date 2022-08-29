@@ -38,6 +38,7 @@ const ResetPasswordModalContent = ({
   };
   return (
     <>
+      <h2>Reset Password</h2>
       <EmailInput
         label={LOGIN_FORM.EMAIL.LABEL}
         type={LOGIN_FORM.EMAIL.TYPE}

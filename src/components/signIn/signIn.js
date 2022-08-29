@@ -1,22 +1,14 @@
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import PopupModal from "../../common/popupModal/popupModal";
 import SignInModalContent from "../signIn/modalContent/signInModalContent/signInModalContent";
 import SignUpModalContent from "../signIn/modalContent/signUpModalContent/signUpModalContent";
 import ResetPasswordModalContent from "../signIn/modalContent/resetPasswordModalContent/resetPasswordModalContent";
-import PasswordLink from "../signIn/passwordLink/passwordLink";
+import PasswordLink from "./modalContent/passwordLink/passwordLink";
 
-const SignIn = ({
-  visible,
-  setVisible,
-  isLoggedIn,
-  setIsLoggedIn,
-  user,
-  setUser,
-}) => {
-  const [modalContent, setModalContent] = useState({
-    modalStatus: "signIn",
-    modalTitle: "Sign In",
-  });
+const SignIn = ({ isLoggedIn, setIsLoggedIn }) => {
+  const modalStatus = useSelector((state) => state.modal.accountModal.content);
+  const modalVisible = useSelector((state) => state.modal.accountModal.visible);
 
   useEffect(() => {
     setIsLoggedIn(localStorage.getItem("setIsLoggedIn"));
@@ -27,56 +19,28 @@ const SignIn = ({
       case "signIn":
         return (
           <SignInModalContent
-            user={user}
-            setUser={setUser}
-            setModalContent={setModalContent}
-            setVisible={setVisible}
             isLoggedIn={isLoggedIn}
             setIsLoggedIn={setIsLoggedIn}
           />
         );
       case "signUp":
-        return (
-          <SignUpModalContent
-            user={user}
-            setUser={setUser}
-            setModalContent={setModalContent}
-            setVisible={setVisible}
-          />
-        );
+        return <SignUpModalContent />;
       case "resetPassword":
-        return (
-          <ResetPasswordModalContent
-            user={user}
-            setUser={setUser}
-            setModalContent={setModalContent}
-          />
-        );
+        return <ResetPasswordModalContent />;
       case "passwordLink":
         return <PasswordLink />;
       default:
         return (
           <SignInModalContent
-            user={user}
-            setUser={setUser}
-            setModalContent={setModalContent}
+            isLoggedIn={isLoggedIn}
+            setIsLoggedIn={setIsLoggedIn}
           />
         );
     }
   };
   return (
-    <PopupModal
-      visible={visible}
-      modalContent={modalContent}
-      handleOnCancel={() => {
-        setVisible(false);
-        setModalContent({
-          modalStatus: "signIn",
-          modalTitle: "Sign In",
-        });
-      }}
-    >
-      {selectModalContent(modalContent.modalStatus)}
+    <PopupModal visible={modalVisible}>
+      {selectModalContent(modalStatus)}
     </PopupModal>
   );
 };

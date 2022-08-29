@@ -1,26 +1,27 @@
 import { React, useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  setAccountModalVisible,
+  setAccountModalContent,
+} from "../../../../redux/modalReducer";
 import EmailInput from "../../../../common/input/emailInput";
 import PasswordInput from "../../../../common/input/passwordInput";
+import { validateEmail, validatePassword } from "../validator";
 import { LOGIN_FORM } from "../../../../content/form";
 import api from "../../../../api/index";
+import "../modalContent.css";
 
 const SignUpModalContent = ({ user, setUser, setModalContent, setVisible }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const EMAIL_REGEX =
-    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  const PWD_REGEX =
-    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+  const dispatch = useDispatch();
 
   const handleSignUp = async () => {
-    const checkEmail = EMAIL_REGEX.test(email);
-    const checkPassword = PWD_REGEX.test(password);
-
-    if (!checkEmail && !checkPassword) {
+    if (!validateEmail(email) && !validatePassword(password)) {
       alert("Invalid Email and Password ");
-    } else if (!checkEmail) {
+    } else if (validateEmail(email)) {
       alert("Invalid Email!");
-    } else if (!checkPassword) {
+    } else if (validatePassword(password)) {
       alert(
         "Password must at least eight characters and contain one letter, one number and one special character!"
       );
@@ -40,13 +41,14 @@ const SignUpModalContent = ({ user, setUser, setModalContent, setVisible }) => {
   };
 
   const handleClick = () => {
-    setModalContent({ modalStatus: "signIn", modalTitle: "Sign In" });
+    dispatch(setAccountModalContent("signIn"));
     setEmail("");
     setPassword("");
   };
 
   return (
     <>
+      <h2>Sign Up</h2>
       <EmailInput
         label={LOGIN_FORM.EMAIL.LABEL}
         type={LOGIN_FORM.EMAIL.TYPE}
@@ -63,12 +65,11 @@ const SignUpModalContent = ({ user, setUser, setModalContent, setVisible }) => {
         type="button"
         className="btn btn-primary btn-lg btn-block"
         onClick={handleSignUp}
-        // onClick={() => signUp(dispatch)(userInfo)}
       >
         Create account
       </button>
       <div>
-        Already have an account
+        <span>Already have an account </span>
         <a href="#" className="link-primary" onClick={handleClick}>
           Sign in
         </a>
