@@ -12,8 +12,8 @@ import "./popupModal.css";
 const PopupModal = ({ visible, children }) => {
   const dispatch = useDispatch();
   const handleOnCancel = () => {
-    dispatch(setAccountModalVisible(false));
     dispatch(setAccountModalContent("signIn"));
+    dispatch(setAccountModalVisible(false));
   };
   return (
     <Modal

@@ -1,21 +1,23 @@
 import React from "react";
-import { UserOutlined, ShoppingCartOutlined } from "@ant-design/icons";
-import { Button } from "antd";
-import { LOGIN_FORM } from "../../content/form";
-import "./header.css";
 import { useSelector, useDispatch } from "react-redux";
+import { logOut } from "../../redux/userReducer";
 import {
   setAccountModalContent,
   setAccountModalVisible,
 } from "../../redux/modalReducer";
+import { UserOutlined, ShoppingCartOutlined } from "@ant-design/icons";
+import { Button } from "antd";
+import "./header.css";
 
 const Header = () => {
   const quantity = useSelector((state) => state.cart.quantity);
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
-  const total = useSelector((state) => state.cart.total);
   const dispatch = useDispatch();
-  const handleClick = () => {
+  const handleSignIn = () => {
     dispatch(setAccountModalVisible(true), setAccountModalContent("signIn"));
+  };
+  const handleSignOut = () => {
+    dispatch(logOut());
   };
 
   return (
@@ -26,10 +28,17 @@ const Header = () => {
         <input placeholder="Search" />
       </div>
       <div className="signin-button">
-        <Button type="primary" onClick={handleClick}>
-          <UserOutlined />
-          {isLoggedIn ? LOGIN_FORM.SIGNOUT : LOGIN_FORM.SIGNIN}
-        </Button>
+        {isLoggedIn ? (
+          <Button type="primary" onClick={handleSignOut}>
+            <UserOutlined />
+            SIGN OUT
+          </Button>
+        ) : (
+          <Button type="primary" onClick={handleSignIn}>
+            <UserOutlined />
+            SIGN IN
+          </Button>
+        )}
       </div>
       <div className="cart-icon"></div>
       <div className="total-amount">

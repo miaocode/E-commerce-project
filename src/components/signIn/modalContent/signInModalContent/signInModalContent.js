@@ -1,14 +1,14 @@
-import { React, useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { setAccountModalContent } from "../../../../redux/modalReducer";
+import { React, useState } from "react";
+import { useDispatch } from "react-redux";
+import {
+  setAccountModalContent,
+  setAccountModalVisible,
+} from "../../../../redux/modalReducer";
 import { logIn } from "../../../../redux/userReducer";
 import EmailInput from "../../../../common/input/emailInput";
 import PasswordInput from "../../../../common/input/passwordInput";
-import { validateEmail, validatePassword } from "../validator";
+import { validateEmail } from "../validator";
 import { LOGIN_FORM } from "../../../../content/form";
-import api from "../../../../api/index";
-
-// import mockAPI from "../mockAPI/mockAPI";
 
 const SignInModalContent = () => {
   const [email, setEmail] = useState("");
@@ -20,6 +20,7 @@ const SignInModalContent = () => {
       alert("Invalid Email!");
     } else {
       dispatch(logIn({ email: email, password: password }));
+      dispatch(setAccountModalVisible(false));
     }
   };
 

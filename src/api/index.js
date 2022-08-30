@@ -25,8 +25,7 @@ const signIn = async (userInfo) => {
     const message = `an error has occured: ${res.status}`;
     throw new Error(message);
   } else {
-    const data = await res.json();
-    return data;
+    return res;
   }
 };
 
