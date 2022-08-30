@@ -1,17 +1,28 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import api from "../api/index";
+
+export const uploadProduct = createAsyncThunk(
+  "product/upload",
+  async (productInfo, thunkAPI) => {}
+);
 
 export const productSlice = createSlice({
   name: "product",
-  initialState: { quantity: 0 },
-  reducers: {
-    increment: (state) => {
-      state.quantity++;
-    },
-    decrement: (state) => {
-      state.quantity--;
-    },
+  initialState: {
+    name: "",
+    price: "",
+    stockQty: "",
+    category: "",
+    description: "",
+    imgUrl: "",
+  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(upload.pending, (state, action) => {
+      state.loading = true;
+    });
   },
 });
 
-export const { increment, decrement } = productSlice.actions;
+//export { } = productSlice.actions;
 export default productSlice.reducer;

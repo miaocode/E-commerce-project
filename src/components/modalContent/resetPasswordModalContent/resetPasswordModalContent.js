@@ -1,8 +1,8 @@
 import { React, useState } from "react";
 import { useDispatch } from "react-redux";
-import { setAccountModalContent } from "../../../../redux/modalReducer";
-import EmailInput from "../../../../common/input/emailInput";
-import { LOGIN_FORM } from "../../../../content/form";
+import { setAccountModalContent } from "../../../redux/modalReducer";
+import EmailInput from "../../../common/input/emailInput";
+import { LOGIN_FORM } from "../../../content/form";
 
 const ResetPasswordModalContent = ({
   userInfo,

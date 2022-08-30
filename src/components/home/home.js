@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import MyHeader from "../../common/header/header";
-import SignIn from "../signIn/content";
+import SignIn from "../modalContent/content";
 import Footer from "../../common/footer/footer";
 import CreateProduct from "../product/createProduct/createProduct";
 import EditProduct from "../product/editProduct/editProduct";

@@ -3,12 +3,12 @@ import { useDispatch } from "react-redux";
 import {
   setAccountModalContent,
   setAccountModalVisible,
-} from "../../../../redux/modalReducer";
-import { register } from "../../../../redux/userReducer";
-import EmailInput from "../../../../common/input/emailInput";
-import PasswordInput from "../../../../common/input/passwordInput";
+} from "../../../redux/modalReducer";
+import { register } from "../../../redux/userReducer";
+import EmailInput from "../../../common/input/emailInput";
+import PasswordInput from "../../../common/input/passwordInput";
 import { validateEmail, validatePassword } from "../validator";
-import { LOGIN_FORM } from "../../../../content/form";
+import { LOGIN_FORM } from "../../../content/form";
 import "../../modalContent.css";
 
 const SignUpModalContent = ({ user, setUser, setModalContent, setVisible }) => {

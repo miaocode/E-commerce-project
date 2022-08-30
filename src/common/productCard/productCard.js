@@ -1,6 +1,5 @@
 // import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setId, increment, decrement } from "../../redux/productReducer";
 import { Link, useNavigate } from "react-router-dom";
 //import api from "../../api";
 import "./productCard.css";
@@ -20,13 +19,9 @@ const ProductCard = ({
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handlePlusOne = () => {
-    dispatch(increment());
-  };
+  const handlePlusOne = () => {};
 
-  const handleMinusOne = () => {
-    dispatch(decrement());
-  };
+  const handleMinusOne = () => {};
 
   return (
     <div className="productCard-container">
