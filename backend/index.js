@@ -17,7 +17,7 @@ mongoose
     console.log(err);
   });
 
-//Register new user
+//REGISTER NEW USER
 
 app.post("/api/register", async (req, res) => {
   try {
@@ -43,7 +43,7 @@ app.post("/api/register", async (req, res) => {
   }
 });
 
-//SignIn
+//SIGN IN
 app.post("/api/signin", async (req, res) => {
   const user = await User.findOne({
     email: req.body.email,
@@ -57,50 +57,7 @@ app.post("/api/signin", async (req, res) => {
   }
 });
 
-//update password
-
-app.post("/api/resetpassword", async (res, req) => {
-  try {
-    const user = await User.findOne({
-      email: req.body.email,
-    });
-    if (user.password === req.body.password) {
-      try {
-        const updatedPassword = { password: req.body.newPassword };
-        const updatedUser = await User.findOneAndUpdate(
-          { email: req.body.email },
-          updatedPassword,
-          {
-            new: true,
-          }
-        );
-        return res.status(200).json(updatedUser);
-      } catch (err) {
-        res.status(500).json(err);
-      }
-    }
-  } catch (err) {
-    return res.status(400).json(err);
-  }
-});
-
-//Create new product
-// app.get("/api/product", async (req, res) => {
-//   res.send("success!");
-// });
-
-app.post("/api/product", async (req, res) => {
-  const newProduct = new Product(req.body);
-  try {
-    const savedProduct = await newProduct.save();
-    res.status(200).json(savedProduct);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-//get all products
-
+//GET ALL PRODUCTS
 app.get("/api/products", async (req, res) => {
   try {
     const products = await Product.find();
@@ -110,12 +67,27 @@ app.get("/api/products", async (req, res) => {
   }
 });
 
-//GET PRODUCT
+//GET ONE PRODUCT
 app.get("/api/products/:id", async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
     console.log(product);
     res.status(200).json(product);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+//CREATE NEW PRODUCT
+// app.get("/api/product", async (req, res) => {
+//   res.send("success!");
+// });
+
+app.post("/api/product", async (req, res) => {
+  const newProduct = new Product(req.body);
+  try {
+    const savedProduct = await newProduct.save();
+    res.status(200).json(savedProduct);
   } catch (err) {
     res.status(500).json(err);
   }

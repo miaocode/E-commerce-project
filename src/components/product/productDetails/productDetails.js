@@ -1,48 +1,26 @@
 import { React, useState, useEffect } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addOneProduct, removeOneProduct } from "../../redux/cartReducer";
+import { findProduct } from "../../../redux/productReducer";
 import "./productDetails.css";
 
 const ProductDetails = () => {
   const isAdmin = useSelector((state) => state.user.isAdmin);
+  const product = useSelector((state) => state.product.product);
   const { id } = useParams();
-  const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(0);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const getProduct = async () => {
-      try {
-        const res = await fetch(`http://localhost:8080/api/products/${id}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const data = await res.json();
-        setProduct(data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getProduct();
+    dispatch(findProduct(id));
   }, [id]);
 
   const handleChange = (num) => {};
-  const handlePlusOne = () => {
-    setQuantity(quantity + 1, () => {
-      dispatch(addOneProduct({ ...product, quantity }));
-    });
-  };
+  const handlePlusOne = () => {};
 
-  const handleMinusOne = () => {
-    setQuantity(quantity - 1, () => {
-      dispatch(addOneProduct({ ...product, quantity }));
-    });
-  };
-  console.log(quantity);
+  const handleMinusOne = () => {};
+
   return (
     <div className="product-details">
       <h3>Product Detail</h3>

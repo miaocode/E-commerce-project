@@ -45,23 +45,23 @@ const resetPassword = async (userInfo) => {
 };
 
 const getProducts = async () => {
-  const res = fetch("http://localhost:8080/api/products", {
+  const data = fetch("http://localhost:8080/api/products", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
   });
-  return res;
+  return data;
 };
 
-const getProduct = async () => {
-  const res = fetch(`http://localhost:8080/api/products/`, {
+const getProduct = async (id) => {
+  const data = fetch(`http://localhost:8080/api/products/${id}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
   });
-  return res;
+  return data;
 };
 
 const createProduct = async (productInfo) => {

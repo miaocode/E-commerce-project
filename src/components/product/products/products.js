@@ -1,42 +1,28 @@
-import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import ProductCard from "../../../common/productCard/productCard";
-import api from "../../../api/index";
+import { loadProducts } from "../../../redux/productReducer";
+import ProductCard from "../productCard/productCard";
 import "./products.css";
 
 const Products = ({ cartQty, setCartQty, setCartSum }) => {
   const isAdmin = useSelector((state) => state.user.isAdmin);
-  const [product, setProduct] = useState([]);
+  const product = useSelector((state) => state.product.product);
+  const dispatch = useDispatch();
   let navigate = useNavigate();
 
   useEffect(() => {
-    const getAllProduct = async () => {
-      try {
-        const res = await api.getProducts();
-        const data = await res.json();
-        setProduct(data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getAllProduct();
+    dispatch(loadProducts());
   }, []);
-
+  console.log(product);
   const productList = product.map((product) => {
     return (
       <ProductCard
         key={product._id}
         id={product._id}
-        category={product.category}
         imgUrl={product.imgUrl}
         productName={product.name}
         price={product.price}
-        descrioption={product.description}
-        stockQty={product.stockQty}
-        cartQty={cartQty}
-        setCartQty={setCartQty}
-        setCartSum={setCartSum}
       />
     );
   });

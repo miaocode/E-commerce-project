@@ -9,7 +9,7 @@ import EmailInput from "../../../common/input/emailInput";
 import PasswordInput from "../../../common/input/passwordInput";
 import { validateEmail, validatePassword } from "../validator";
 import { LOGIN_FORM } from "../../../content/form";
-import "../../modalContent.css";
+import "../modalContent.css";
 
 const SignUpModalContent = ({ user, setUser, setModalContent, setVisible }) => {
   const [email, setEmail] = useState("");

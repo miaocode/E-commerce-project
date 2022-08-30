@@ -4,19 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 //import api from "../../api";
 import "./productCard.css";
 
-const ProductCard = ({
-  id,
-  imgUrl,
-  stockQty,
-  productName,
-  price,
-  setCartQty,
-  setCartSum,
-}) => {
-  // const [product, setProduct] = useState({});
+const ProductCard = ({ id, imgUrl, productName, price }) => {
   const quantity = useSelector((state) => state.product.quantity);
   const isAdmin = useSelector((state) => state.user.isAdmin);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handlePlusOne = () => {};

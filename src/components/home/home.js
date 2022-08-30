@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import MyHeader from "../../common/header/header";
-import SignIn from "../modalContent/content";
+import Content from "../modalContent/content";
 import Footer from "../../common/footer/footer";
 import CreateProduct from "../product/createProduct/createProduct";
 import EditProduct from "../product/editProduct/editProduct";
-import ProductDetails from "../../common/productDetails/productDetails";
+import ProductDetails from "../../components/product/productDetails/productDetails";
 import Products from "../product/products/products";
 import "./home.css";
 
@@ -16,7 +16,7 @@ const Home = () => {
   return (
     <div className="body">
       <MyHeader cartQty={cartQty} cartSum={cartSum} />
-      <SignIn />
+      <Content />
       <div className="routes">
         <Routes>
           <Route

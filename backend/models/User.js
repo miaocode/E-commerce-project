@@ -13,12 +13,12 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     required: false,
   },
-  shoppingCart: [
+  cart: [
     {
       _id: { type: String },
       item: { type: String },
       price: { type: Number },
-      quantity: { type: Number },
+      cartQuantity: { type: Number },
     },
   ],
 });

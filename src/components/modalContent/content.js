@@ -1,11 +1,11 @@
 import { useSelector } from "react-redux";
 import PopupModal from "../../common/popupModal/popupModal";
-import SignInModalContent from "./modalContent/signInModalContent/signInModalContent";
-import SignUpModalContent from "./modalContent/signUpModalContent/signUpModalContent";
-import ResetPasswordModalContent from "./modalContent/resetPasswordModalContent/resetPasswordModalContent";
-import PasswordLink from "./modalContent/passwordLink/passwordLink";
+import SignInModalContent from "./signInModalContent/signInModalContent";
+import SignUpModalContent from "./signUpModalContent/signUpModalContent";
+import ResetPasswordModalContent from "./resetPasswordModalContent/resetPasswordModalContent";
+import PasswordLink from "./passwordLink/passwordLink";
 
-const SignIn = () => {
+const Content = () => {
   const modalStatus = useSelector((state) => state.modal.accountModal.content);
   const modalVisible = useSelector((state) => state.modal.accountModal.visible);
 
@@ -30,4 +30,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default Content;
