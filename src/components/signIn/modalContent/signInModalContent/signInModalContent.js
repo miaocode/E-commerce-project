@@ -19,8 +19,12 @@ const SignInModalContent = () => {
     if (!validateEmail(email)) {
       alert("Invalid Email!");
     } else {
-      dispatch(logIn({ email: email, password: password }));
-      dispatch(setAccountModalVisible(false));
+      try {
+        dispatch(logIn({ email: email, password: password }));
+        dispatch(setAccountModalVisible(false));
+      } catch (error) {
+        alert(error);
+      }
     }
   };
 

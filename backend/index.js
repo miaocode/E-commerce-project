@@ -18,20 +18,28 @@ mongoose
   });
 
 //Register new user
-app.get("/api/register", async (req, res) => {
-  res.send("success!");
-});
 
 app.post("/api/register", async (req, res) => {
   try {
-    const newUser = new User({
+    const user = await User.findOne({
       email: req.body.email,
-      password: req.body.password,
-    });
-    const savedUser = await newUser.save();
-    res.status(200).json("You have been signed up!");
-  } catch (err) {
-    res.status(400).json(err);
+    }).exec();
+    if (user !== null) {
+      res.status(400).json("Email has been registed!");
+    } else {
+      try {
+        const newUser = new User({
+          email: req.body.email,
+          password: req.body.password,
+        });
+        const savedUser = await newUser.save();
+        res.status(200).json("You have been signed up!");
+      } catch (err) {
+        res.status(500).json("Something went wrong...");
+      }
+    }
+  } catch (error) {
+    res.status(500).json(error);
   }
 });
 

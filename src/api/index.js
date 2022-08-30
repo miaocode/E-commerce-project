@@ -1,6 +1,6 @@
 const BASE_URL = "http://localhost:8080/api";
 
-const registerUser = async (userInfo) => {
+const register = async (userInfo) => {
   const res = await fetch("http://localhost:8080/api/register", {
     method: "POST",
     headers: {
@@ -8,8 +8,12 @@ const registerUser = async (userInfo) => {
     },
     body: JSON.stringify(userInfo),
   });
-  const data = await res.json();
-  return data;
+  if (!res.ok) {
+    const message = await res.json();
+    throw Error(message);
+  } else {
+    return res.json();
+  }
 };
 
 const signIn = async (userInfo) => {
@@ -37,7 +41,6 @@ const resetPassword = async (userInfo) => {
     },
     body: JSON.stringify(userInfo),
   });
-  console.log(res);
   return res;
 };
 
@@ -73,7 +76,7 @@ const createProduct = async (productInfo) => {
 };
 
 export default {
-  registerUser,
+  register,
   signIn,
   resetPassword,
   getProducts,

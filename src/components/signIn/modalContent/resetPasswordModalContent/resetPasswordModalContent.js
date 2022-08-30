@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import { React, useState } from "react";
+import { useDispatch } from "react-redux";
+import { setAccountModalContent } from "../../../../redux/modalReducer";
 import EmailInput from "../../../../common/input/emailInput";
-import PasswordInput from "../../../../common/input/passwordInput";
 import { LOGIN_FORM } from "../../../../content/form";
-import api from "../../../../api/index";
 
 const ResetPasswordModalContent = ({
   userInfo,
@@ -10,9 +10,7 @@ const ResetPasswordModalContent = ({
   setModalContent,
 }) => {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-
+  const dispatch = useDispatch();
   const EMAIL_REGEX =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -20,21 +18,9 @@ const ResetPasswordModalContent = ({
     const checkEmail = EMAIL_REGEX.test(email);
     if (!checkEmail) {
       alert("Invalid Email!");
+    } else {
+      dispatch(setAccountModalContent("passwordLink"));
     }
-
-    const res = await api.resetPassword({
-      email: email,
-      password: password,
-      newPassword: newPassword,
-    });
-    console.log(res);
-    const data = await res.json();
-    console.log(data);
-    // setEmail("");
-    // setModalContent({
-    //   modalStatus: "passwordLink",
-    //   modalTitle: "",
-    // });
   };
   return (
     <>
@@ -45,22 +31,7 @@ const ResetPasswordModalContent = ({
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
-      <PasswordInput
-        label={LOGIN_FORM.PASSWORD.LABEL}
-        type={LOGIN_FORM.PASSWORD.TYPE}
-        value={password}
-        minLength={8}
-        maxLength={30}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <PasswordInput
-        label="New Password"
-        type={LOGIN_FORM.PASSWORD.TYPE}
-        value={newPassword}
-        minLength={8}
-        maxLength={30}
-        onChange={(e) => setNewPassword(e.target.value)}
-      />
+
       <button
         type="button"
         className="btn btn-primary btn-lg btn-block"

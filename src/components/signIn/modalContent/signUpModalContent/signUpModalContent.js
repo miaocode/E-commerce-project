@@ -1,12 +1,15 @@
-import { React, useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { setAccountModalContent } from "../../../../redux/modalReducer";
+import { React, useState } from "react";
+import { useDispatch } from "react-redux";
+import {
+  setAccountModalContent,
+  setAccountModalVisible,
+} from "../../../../redux/modalReducer";
+import { register } from "../../../../redux/userReducer";
 import EmailInput from "../../../../common/input/emailInput";
 import PasswordInput from "../../../../common/input/passwordInput";
 import { validateEmail, validatePassword } from "../validator";
 import { LOGIN_FORM } from "../../../../content/form";
-import api from "../../../../api/index";
-import "../modalContent.css";
+import "../../modalContent.css";
 
 const SignUpModalContent = ({ user, setUser, setModalContent, setVisible }) => {
   const [email, setEmail] = useState("");
@@ -16,24 +19,19 @@ const SignUpModalContent = ({ user, setUser, setModalContent, setVisible }) => {
   const handleSignUp = async () => {
     if (!validateEmail(email) && !validatePassword(password)) {
       alert("Invalid Email and Password ");
-    } else if (validateEmail(email)) {
+    } else if (!validateEmail(email)) {
       alert("Invalid Email!");
-    } else if (validatePassword(password)) {
+    } else if (!validatePassword(password)) {
       alert(
         "Password must at least eight characters and contain one letter, one number and one special character!"
       );
-    }
-    try {
-      const res = await api.registerUser({
-        email: email,
-        password: password,
-      });
-
-      alert("You have been signed up!");
-      setVisible(false);
-    } catch (error) {
-      console.log(error);
-      alert("Something went wrong...");
+    } else {
+      try {
+        dispatch(register({ email: email, password: password }));
+        dispatch(setAccountModalVisible(false));
+      } catch (error) {
+        alert(error);
+      }
     }
   };
 
