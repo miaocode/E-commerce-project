@@ -1,10 +1,11 @@
 import { React, useState, useEffect } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { addOneProduct, removeOneProduct } from "../../redux/cartRedux";
+import { useDispatch, useSelector } from "react-redux";
+import { addOneProduct, removeOneProduct } from "../../redux/cartReducer";
 import "./productDetails.css";
 
-const ProductDetails = ({ isLoggedIn }) => {
+const ProductDetails = () => {
+  const isAdmin = useSelector((state) => state.user.isAdmin);
   const { id } = useParams();
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(0);
@@ -67,7 +68,7 @@ const ProductDetails = ({ isLoggedIn }) => {
           ) : (
             <button onClick={handlePlusOne}>Add/Qty</button>
           )}
-          {isLoggedIn && (
+          {isAdmin && (
             <Link to={`/editProduct/${id}`}>
               {<button onClick={() => navigate("editProduct")}>Edit</button>}
             </Link>

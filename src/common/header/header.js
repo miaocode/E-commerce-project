@@ -9,8 +9,9 @@ import {
   setAccountModalVisible,
 } from "../../redux/modalReducer";
 
-const Header = ({ setVisible, isLoggedIn }) => {
+const Header = () => {
   const quantity = useSelector((state) => state.cart.quantity);
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const total = useSelector((state) => state.cart.total);
   const dispatch = useDispatch();
   const handleClick = () => {

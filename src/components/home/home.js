@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Routes, Route } from "react-router-dom";
 import MyHeader from "../../common/header/header";
 import SignIn from "../signIn/signIn";
@@ -10,26 +11,21 @@ import Products from "../product/products/products";
 import "./home.css";
 
 const Home = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState({});
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const [cartQty, setCartQty] = useState(0);
   const [cartSum, setCartSum] = useState(0);
 
   return (
     <div className="body">
-      <MyHeader cartQty={cartQty} cartSum={cartSum} isLoggedIn={isLoggedIn} />
-      <SignIn
-        isLoggedIn={isLoggedIn}
-        setIsLoggedIn={setIsLoggedIn}
-        setUser={setUser}
-      />
+      <MyHeader cartQty={cartQty} cartSum={cartSum} />
+      <SignIn setUser={setUser} />
       <div className="routes">
         <Routes>
           <Route
             path="/products"
             element={
               <Products
-                isLoggedIn={isLoggedIn}
                 cartQty={cartQty}
                 setCartQty={setCartQty}
                 setCartSum={setCartSum}
@@ -40,7 +36,6 @@ const Home = () => {
             path="/products/:id"
             element={
               <ProductDetails
-                isLoggedIn={isLoggedIn}
                 cartQty={cartQty}
                 setCartQty={setCartQty}
                 setCartSum={setCartSum}

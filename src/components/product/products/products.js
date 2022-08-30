@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import ProductCard from "../../../common/productCard/productCard";
 import api from "../../../api/index";
 import "./products.css";
 
-const Products = ({ isLoggedIn, cartQty, setCartQty, setCartSum }) => {
+const Products = ({ cartQty, setCartQty, setCartSum }) => {
+  const isAdmin = useSelector((state) => state.user.isAdmin);
   const [product, setProduct] = useState([]);
   let navigate = useNavigate();
 
@@ -35,7 +37,6 @@ const Products = ({ isLoggedIn, cartQty, setCartQty, setCartSum }) => {
         cartQty={cartQty}
         setCartQty={setCartQty}
         setCartSum={setCartSum}
-        isLoggedIn={isLoggedIn}
       />
     );
   });
@@ -43,7 +44,7 @@ const Products = ({ isLoggedIn, cartQty, setCartQty, setCartSum }) => {
     <main>
       <h3>Products</h3>
 
-      {isLoggedIn && (
+      {isAdmin && (
         <button
           type="button"
           className="btn btn-primary"

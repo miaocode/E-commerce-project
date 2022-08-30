@@ -4,12 +4,13 @@
   border: solid black 1px;
 }
 .product-info {
+  padding: 5px;
+  height: 95%;
   width: 100%;
   display: flex;
   flex-direction: column;
-  /* height: 350px; */
+  justify-content: center;
   position: relative;
-  /* border: solid black 1px; */
 }
 
 img {

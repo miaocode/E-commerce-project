@@ -8,7 +8,8 @@ const registerUser = async (userInfo) => {
     },
     body: JSON.stringify(userInfo),
   });
-  return res;
+  const data = await res.json();
+  return data;
 };
 
 const signIn = async (userInfo) => {
@@ -19,7 +20,14 @@ const signIn = async (userInfo) => {
     },
     body: JSON.stringify(userInfo),
   });
-  return res;
+
+  if (!res.ok) {
+    const message = `an error has occured: ${res.status}`;
+    throw new Error(message);
+  } else {
+    const data = await res.json();
+    return data;
+  }
 };
 
 const resetPassword = async (userInfo) => {

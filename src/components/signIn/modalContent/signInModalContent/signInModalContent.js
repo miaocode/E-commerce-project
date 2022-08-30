@@ -1,9 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  setAccountModalVisible,
-  setAccountModalContent,
-} from "../../../../redux/modalReducer";
+import { setAccountModalContent } from "../../../../redux/modalReducer";
+import { logIn } from "../../../../redux/userReducer";
 import EmailInput from "../../../../common/input/emailInput";
 import PasswordInput from "../../../../common/input/passwordInput";
 import { validateEmail, validatePassword } from "../validator";
@@ -12,38 +10,16 @@ import api from "../../../../api/index";
 
 // import mockAPI from "../mockAPI/mockAPI";
 
-const SignInModalContent = ({ isLoggedIn, setIsLoggedIn }) => {
+const SignInModalContent = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    setIsLoggedIn(localStorage.getItem("setIsLoggedIn"));
-  }, [isLoggedIn]);
-
   const handleSignIn = async () => {
-    if (!validateEmail(email) && !validatePassword(password)) {
-      alert("Invalid Email and Password ");
-    } else if (validateEmail(email)) {
+    if (!validateEmail(email)) {
       alert("Invalid Email!");
-    } else if (validatePassword(password)) {
-      alert(
-        "Password must at least eight characters and contain one letter, one number and one special character!"
-      );
-    }
-    const res = await api.signIn({
-      email: email,
-      password: password,
-    });
-
-    const data = await res.json();
-    if (data.email) {
-      await localStorage.setItem("setIsLoggedIn", JSON.stringify(true));
-      alert("Welcome back!");
-      setIsLoggedIn(true);
-      dispatch(setAccountModalVisible(false));
     } else {
-      alert(data);
+      dispatch(logIn({ email: email, password: password }));
     }
   };
 

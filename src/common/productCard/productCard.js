@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addOneProduct, removeOneProduct } from "../../redux/cartRedux";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import api from "../../api";
+// import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setId, increment, decrement } from "../../redux/productReducer";
+import { Link, useNavigate } from "react-router-dom";
+//import api from "../../api";
 import "./productCard.css";
 
 const ProductCard = ({
@@ -13,21 +13,19 @@ const ProductCard = ({
   price,
   setCartQty,
   setCartSum,
-  isLoggedIn,
 }) => {
-  const [product, setProduct] = useState({});
-  const [quantity, setQuantity] = useState(0);
+  // const [product, setProduct] = useState({});
+  const quantity = useSelector((state) => state.product.quantity);
+  const isAdmin = useSelector((state) => state.user.isAdmin);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handlePlusOne = () => {
-    setQuantity(quantity + 1);
-    dispatch(addOneProduct({ ...product, quantity }));
+    dispatch(increment());
   };
 
   const handleMinusOne = () => {
-    setQuantity(quantity - 1);
-    dispatch(removeOneProduct({ ...product, quantity }));
+    dispatch(decrement());
   };
 
   return (
@@ -49,7 +47,7 @@ const ProductCard = ({
           ) : (
             <button onClick={handlePlusOne}>Add/Qty</button>
           )}
-          {isLoggedIn && (
+          {isAdmin && (
             <Link to={`/editProduct/${id}`}>
               <button onClick={() => navigate("editProduct")}>Edit</button>
             </Link>

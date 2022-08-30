@@ -1,9 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  setAccountModalVisible,
-  setAccountModalContent,
-} from "../../../../redux/modalReducer";
+import { setAccountModalContent } from "../../../../redux/modalReducer";
 import EmailInput from "../../../../common/input/emailInput";
 import PasswordInput from "../../../../common/input/passwordInput";
 import { validateEmail, validatePassword } from "../validator";
