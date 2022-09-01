@@ -10,9 +10,24 @@ import { Button } from "antd";
 import "./header.css";
 
 const Header = () => {
-  const [quantity, setQuantity] = useState(0);
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const dispatch = useDispatch();
+  const [quantity, setQuantity] = useState(0);
+  const { userID, isLoggedIn, isAdmin, cart } = useSelector(
+    (state) => state.user
+  );
+
+  const cartQantity = (function () {
+    return cart.reduce((pre, cur) => {
+      return pre + cur.quantity;
+    }, 0);
+  })();
+
+  const cartAmount = (function () {
+    return cart.reduce((pre, cur) => {
+      return pre + cur.quantity * cur.price;
+    }, 0);
+  })();
+
   const handleSignIn = () => {
     dispatch(setAccountModalVisible(true), setAccountModalContent("signIn"));
   };
@@ -43,8 +58,8 @@ const Header = () => {
       <div className="cart-icon"></div>
       <div className="total-amount">
         <ShoppingCartOutlined />
-        <span id="cartQty">{quantity}</span>
-        <span id="cartAmount">$0.00</span>
+        <span id="cartQty">{cartQantity}</span>
+        <span id="cartAmount">${cartAmount}</span>
       </div>
     </div>
   );
