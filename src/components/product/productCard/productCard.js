@@ -9,13 +9,13 @@ const ProductCard = ({ id, imgUrl, name, price }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const cartProduct = cart.find((item) => item._id === id);
-  const quantity = () => {
+  const quantity = (function () {
     if (cartProduct) {
       return cartProduct.quantity;
     } else {
       return 0;
     }
-  };
+  })();
 
   const handleClick = (userID, productID, qty, name, price) => {
     dispatch(updateCart({ userID, productID, qty, name, price }));

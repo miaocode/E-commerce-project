@@ -6,14 +6,14 @@ import ProductCard from "../productCard/productCard";
 import "./products.css";
 
 const Products = ({ cartQty, setCartQty, setCartSum }) => {
-  const { userID, isAdmin } = useSelector((state) => state.user);
+  const { isAdmin } = useSelector((state) => state.user);
   const product = useSelector((state) => state.product.product);
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
   useEffect(() => {
     dispatch(loadProducts());
-  }, []);
+  }, [product]);
 
   const productList = product.map((product) => {
     return (
