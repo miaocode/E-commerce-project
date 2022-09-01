@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { logOut } from "../../redux/userReducer";
 import {
@@ -10,7 +10,7 @@ import { Button } from "antd";
 import "./header.css";
 
 const Header = () => {
-  const quantity = useSelector((state) => state.cart.quantity);
+  const [quantity, setQuantity] = useState(0);
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const dispatch = useDispatch();
   const handleSignIn = () => {

@@ -1,17 +1,25 @@
 // import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-//import api from "../../api";
+import { updateCart } from "../../../redux/userReducer";
 import "./productCard.css";
 
-const ProductCard = ({ id, imgUrl, productName, price }) => {
-  const quantity = useSelector((state) => state.product.quantity);
-  const isAdmin = useSelector((state) => state.user.isAdmin);
+const ProductCard = ({ id, imgUrl, name, price }) => {
+  const { userID, isAdmin, cart } = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const cartProduct = cart.find((item) => item._id === id);
+  const quantity = () => {
+    if (cartProduct) {
+      return cartProduct.quantity;
+    } else {
+      return 0;
+    }
+  };
 
-  const handlePlusOne = () => {};
-
-  const handleMinusOne = () => {};
+  const handleClick = (userID, productID, qty, name, price) => {
+    dispatch(updateCart({ userID, productID, qty, name, price }));
+  };
 
   return (
     <div className="productCard-container">
@@ -19,18 +27,23 @@ const ProductCard = ({ id, imgUrl, productName, price }) => {
         <Link to={`/products/${id}`}>
           <img src={imgUrl} alt="" />
         </Link>
-
-        <p id="product-name">{productName}</p>
+        ,<p id="product-name">{name}</p>
         <p id="product-price">${price}</p>
         <div className="button-container">
           {quantity ? (
             <div>
-              <button onClick={handleMinusOne}>-</button>
+              <button onClick={() => handleClick(userID, id, -1, name, price)}>
+                -
+              </button>
               <span>{quantity}</span>
-              <button onClick={handlePlusOne}>+</button>
+              <button onClick={() => handleClick(userID, id, 1, name, price)}>
+                +
+              </button>
             </div>
           ) : (
-            <button onClick={handlePlusOne}>Add/Qty</button>
+            <button onClick={() => handleClick(userID, id, 1, name, price)}>
+              Add/Qty
+            </button>
           )}
           {isAdmin && (
             <Link to={`/editProduct/${id}`}>

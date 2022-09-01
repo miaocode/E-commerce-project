@@ -1,5 +1,3 @@
-const BASE_URL = "http://localhost:8080/api";
-
 const register = async (userInfo) => {
   const res = await fetch("http://localhost:8080/api/register", {
     method: "POST",
@@ -33,19 +31,24 @@ const signIn = async (userInfo) => {
   }
 };
 
-const resetPassword = async (userInfo) => {
-  const res = await fetch("http://localhost:8080/api/resetpassword", {
-    method: "POST",
+const updateCart = async (cartInfo) => {
+  const res = await fetch("http://localhost:8080/api/cart", {
+    method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(userInfo),
+    body: JSON.stringify(cartInfo),
   });
-  return res;
+  if (!res.ok) {
+    const message = `an error has occured: ${res.status}`;
+    throw new Error(message);
+  } else {
+    return res;
+  }
 };
 
 const getProducts = async () => {
-  const data = fetch("http://localhost:8080/api/products", {
+  const data = await fetch("http://localhost:8080/api/products", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -55,7 +58,7 @@ const getProducts = async () => {
 };
 
 const getProduct = async (id) => {
-  const data = fetch(`http://localhost:8080/api/products/${id}`, {
+  const data = await fetch(`http://localhost:8080/api/products/${id}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -78,8 +81,8 @@ const createProduct = async (productInfo) => {
 export default {
   register,
   signIn,
-  resetPassword,
   getProducts,
   getProduct,
+  updateCart,
   createProduct,
 };

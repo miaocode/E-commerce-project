@@ -48,12 +48,38 @@ app.post("/api/signin", async (req, res) => {
   const user = await User.findOne({
     email: req.body.email,
   });
+  console.log(req.body);
   if (!user) {
     return res.status(401).json("Invalid email!");
   } else if (user.password === req.body.password) {
     return res.status(200).json(user);
   } else {
     return res.status(401).json("Incorrect password!");
+  }
+});
+
+//UPDATE CART
+app.put("/api/cart", async (req, res) => {
+  try {
+    const { userID, productID, qty, name, price } = req.body;
+    let user = await User.findById(userID);
+    let product = user.cart.find((item) => {
+      return item._id === productID;
+    });
+    if (product) {
+      product.quantity = product.quantity + qty;
+    } else {
+      user.cart.push({
+        _id: productID,
+        name: name,
+        quantity: qty,
+        price: price,
+      });
+    }
+    await user.save();
+    return res.status(200).json(user);
+  } catch (err) {
+    return res.status(500).json(err);
   }
 });
 
@@ -71,7 +97,6 @@ app.get("/api/products", async (req, res) => {
 app.get("/api/products/:id", async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
-    console.log(product);
     res.status(200).json(product);
   } catch (err) {
     res.status(500).json(err);
@@ -88,22 +113,6 @@ app.post("/api/product", async (req, res) => {
   try {
     const savedProduct = await newProduct.save();
     res.status(200).json(savedProduct);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-//UPDATE
-app.put("/:id", async (req, res) => {
-  try {
-    const updatedProduct = await Product.findByIdAndUpdate(
-      req.params.id,
-      {
-        $set: req.body,
-      },
-      { new: true }
-    );
-    res.status(200).json(updatedProduct);
   } catch (err) {
     res.status(500).json(err);
   }

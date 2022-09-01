@@ -6,7 +6,7 @@ import ProductCard from "../productCard/productCard";
 import "./products.css";
 
 const Products = ({ cartQty, setCartQty, setCartSum }) => {
-  const isAdmin = useSelector((state) => state.user.isAdmin);
+  const { userID, isAdmin } = useSelector((state) => state.user);
   const product = useSelector((state) => state.product.product);
   const dispatch = useDispatch();
   let navigate = useNavigate();
@@ -14,14 +14,14 @@ const Products = ({ cartQty, setCartQty, setCartSum }) => {
   useEffect(() => {
     dispatch(loadProducts());
   }, []);
-  console.log(product);
+
   const productList = product.map((product) => {
     return (
       <ProductCard
         key={product._id}
         id={product._id}
         imgUrl={product.imgUrl}
-        productName={product.name}
+        name={product.name}
         price={product.price}
       />
     );
