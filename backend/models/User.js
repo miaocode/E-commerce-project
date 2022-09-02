@@ -20,6 +20,7 @@ const UserSchema = new mongoose.Schema(
         name: { type: String },
         quantity: { type: Number },
         price: { type: Number },
+        url: { type: String },
       },
     ],
   },

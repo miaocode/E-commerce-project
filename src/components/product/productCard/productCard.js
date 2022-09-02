@@ -1,4 +1,3 @@
-// import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { updateCart } from "../../../redux/userReducer";
@@ -17,31 +16,39 @@ const ProductCard = ({ id, imgUrl, name, price }) => {
     }
   })();
 
-  const handleClick = (userID, productID, qty, name, price) => {
-    dispatch(updateCart({ userID, productID, qty, name, price }));
+  const handleClick = (userID, productID, url, qty, name, price) => {
+    dispatch(updateCart({ userID, productID, url, qty, name, price }));
   };
 
   return (
     <div className="productCard-container">
-      <div className="product-info">
+      <div className="product-img">
         <Link to={`/products/${id}`}>
           <img src={imgUrl} alt="" />
         </Link>
-        ,<p id="product-name">{name}</p>
+      </div>
+      <div className="product-info">
+        <p id="product-name">{name}</p>
         <p id="product-price">${price}</p>
         <div className="button-container">
           {quantity ? (
             <div>
-              <button onClick={() => handleClick(userID, id, -1, name, price)}>
+              <button
+                onClick={() => handleClick(userID, id, imgUrl, -1, name, price)}
+              >
                 -
               </button>
               <span>{quantity}</span>
-              <button onClick={() => handleClick(userID, id, 1, name, price)}>
+              <button
+                onClick={() => handleClick(userID, id, imgUrl, 1, name, price)}
+              >
                 +
               </button>
             </div>
           ) : (
-            <button onClick={() => handleClick(userID, id, 1, name, price)}>
+            <button
+              onClick={() => handleClick(userID, id, imgUrl, 1, name, price)}
+            >
               Add/Qty
             </button>
           )}

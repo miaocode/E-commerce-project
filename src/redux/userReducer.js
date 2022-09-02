@@ -27,9 +27,16 @@ export const logIn = createAsyncThunk(
 
 export const updateCart = createAsyncThunk(
   "user/updateCart",
-  async (userID, productID, qty, name, price, thunkAPI) => {
+  async (userID, productID, url, qty, name, price, thunkAPI) => {
     try {
-      const res = await api.updateCart(userID, productID, qty, name, price);
+      const res = await api.updateCart(
+        userID,
+        productID,
+        url,
+        qty,
+        name,
+        price
+      );
       const data = await res.json();
       return data;
     } catch (error) {

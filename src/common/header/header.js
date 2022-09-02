@@ -1,9 +1,11 @@
-import { React, useState } from "react";
+import { React } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import Cart from "./cart/cart";
 import { logOut } from "../../redux/userReducer";
 import {
   setAccountModalContent,
   setAccountModalVisible,
+  setCartModualVisible,
 } from "../../redux/modalReducer";
 import { UserOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { Button } from "antd";
@@ -11,7 +13,7 @@ import "./header.css";
 
 const Header = () => {
   const dispatch = useDispatch();
-  const [quantity, setQuantity] = useState(0);
+  const showCart = useSelector((state) => state.modal.cartModal.visible);
   const { userID, isLoggedIn, isAdmin, cart } = useSelector(
     (state) => state.user
   );
@@ -35,10 +37,13 @@ const Header = () => {
     dispatch(logOut());
   };
 
+  const handleClick = () => {
+    dispatch(setCartModualVisible(!showCart));
+  };
+
   return (
     <div className="header-container">
       <h1 id="management">Management</h1>
-
       <div className="search-bar">
         <input placeholder="Search" />
       </div>
@@ -55,9 +60,10 @@ const Header = () => {
           </Button>
         )}
       </div>
-      <div className="cart-icon"></div>
       <div className="total-amount">
-        <ShoppingCartOutlined />
+        <span onClick={handleClick}>
+          <ShoppingCartOutlined />
+        </span>
         <span id="cartQty">{cartQantity}</span>
         <span id="cartAmount">${cartAmount}</span>
       </div>

@@ -20,8 +20,8 @@ const ProductDetails = () => {
     dispatch(findProduct(id));
   }, [id]);
 
-  const handleClick = (userID, productID, qty, name, price) => {
-    dispatch(updateCart({ userID, productID, qty, name, price }));
+  const handleClick = (userID, productID, url, qty, name, price) => {
+    dispatch(updateCart({ userID, productID, url, qty, name, price }));
   };
 
   return (
@@ -38,16 +38,22 @@ const ProductDetails = () => {
           <p id="description">{description}</p>
           {quantity ? (
             <div>
-              <button onClick={() => handleClick(userID, id, -1, name, price)}>
+              <button
+                onClick={() => handleClick(userID, id, imgUrl, -1, name, price)}
+              >
                 -
               </button>
               <span>{quantity}</span>
-              <button onClick={() => handleClick(userID, id, 1, name, price)}>
+              <button
+                onClick={() => handleClick(userID, id, imgUrl, 1, name, price)}
+              >
                 +
               </button>
             </div>
           ) : (
-            <button onClick={() => handleClick(userID, id, 1, name, price)}>
+            <button
+              onClick={() => handleClick(userID, id, imgUrl, 1, name, price)}
+            >
               Add/Qty
             </button>
           )}

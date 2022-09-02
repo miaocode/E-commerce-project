@@ -61,7 +61,7 @@ app.post("/api/signin", async (req, res) => {
 //UPDATE CART
 app.put("/api/cart", async (req, res) => {
   try {
-    const { userID, productID, qty, name, price } = req.body;
+    const { userID, productID, url, qty, name, price } = req.body;
     let user = await User.findById(userID);
     let product = user.cart.find((item) => {
       return item._id === productID;
@@ -74,6 +74,7 @@ app.put("/api/cart", async (req, res) => {
         name: name,
         quantity: qty,
         price: price,
+        url: url,
       });
     }
     await user.save();

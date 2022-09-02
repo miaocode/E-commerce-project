@@ -1,0 +1,40 @@
+.shopping-cart {
+  width: 26% !important;
+  height: 50%;
+  /* overflow-y: scroll; */
+  background-color: whitesmoke;
+  position: absolute;
+  left: 72%;
+  top: 10%;
+}
+h2 {
+  background-color: lightgray;
+  padding: 5px 15px;
+  /* display: flex;
+  flex: 0 0 auto; */
+}
+.shopping-cart-content {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  overflow-y: auto;
+  max-height: 420px;
+}
+
+.cart-list {
+  overflow-y: scroll;
+}
+
+.cart-item {
+  display: flex;
+  flex-direction: row;
+}
+.cart-item img {
+  width: 60%;
+  height: auto;
+}
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+}
