@@ -27,6 +27,19 @@ export const findProduct = createAsyncThunk(
   }
 );
 
+export const createProduct = createAsyncThunk(
+  "product/createProduct",
+  async (productInfo, thunkAPI) => {
+    try {
+      const res = await api.createProduct(productInfo);
+      const data = await res.json();
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
 export const productSlice = createSlice({
   name: "product",
   initialState: {
@@ -53,6 +66,15 @@ export const productSlice = createSlice({
         state.loading = false;
       })
       .addCase(findProduct.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(createProduct.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(createProduct.fulfilled, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(createProduct.rejected, (state, action) => {
         state.loading = false;
       });
   },

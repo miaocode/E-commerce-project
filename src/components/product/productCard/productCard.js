@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { updateCart } from "../../../redux/userReducer";
@@ -18,6 +19,7 @@ const ProductCard = ({ id, imgUrl, name, price }) => {
 
   const handleClick = (userID, productID, url, qty, name, price) => {
     dispatch(updateCart({ userID, productID, url, qty, name, price }));
+    //console.log(cart);
   };
 
   return (

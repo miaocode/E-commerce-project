@@ -14,11 +14,11 @@ const ProductDetails = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const cartProduct = cart.find((item) => item._id === id);
-  const quantity = cartProduct.quantity;
+  const quantity = cartProduct ? cartProduct.quantity : 0;
 
   useEffect(() => {
     dispatch(findProduct(id));
-  }, [id]);
+  }, []);
 
   const handleClick = (userID, productID, url, qty, name, price) => {
     dispatch(updateCart({ userID, productID, url, qty, name, price }));

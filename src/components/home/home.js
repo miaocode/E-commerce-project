@@ -10,6 +10,7 @@ import ProductDetails from "../../components/product/productDetails/productDetai
 import Products from "../product/products/products";
 import "./home.css";
 import { useSelector } from "react-redux";
+import ErrorBoundary from "../errorBoundary/ErrorBoundary";
 
 const Home = () => {
   const [cartQty, setCartQty] = useState(0);
@@ -19,34 +20,35 @@ const Home = () => {
   return (
     <div className="body">
       <MyHeader cartQty={cartQty} cartSum={cartSum} />
-
-      <Content />
-      <div className="routes">
-        <Routes>
-          <Route
-            path="/products"
-            element={
-              <Products
-                cartQty={cartQty}
-                setCartQty={setCartQty}
-                setCartSum={setCartSum}
-              />
-            }
-          ></Route>
-          <Route
-            path="/products/:id"
-            element={
-              <ProductDetails
-                cartQty={cartQty}
-                setCartQty={setCartQty}
-                setCartSum={setCartSum}
-              />
-            }
-          />
-          <Route path="/createProduct" element={<CreateProduct />} />
-          <Route path="/editProduct/:id" element={<EditProduct />} />
-        </Routes>
-      </div>
+      <ErrorBoundary>
+        <Content />
+        <div className="routes">
+          <Routes>
+            <Route
+              path="/products"
+              element={
+                <Products
+                  cartQty={cartQty}
+                  setCartQty={setCartQty}
+                  setCartSum={setCartSum}
+                />
+              }
+            ></Route>
+            <Route
+              path="/products/:id"
+              element={
+                <ProductDetails
+                  cartQty={cartQty}
+                  setCartQty={setCartQty}
+                  setCartSum={setCartSum}
+                />
+              }
+            />
+            <Route path="/createProduct" element={<CreateProduct />} />
+            <Route path="/editProduct/:id" element={<EditProduct />} />
+          </Routes>
+        </div>
+      </ErrorBoundary>
       {showCart && <ShoppingCart />}
       <Footer />
     </div>

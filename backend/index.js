@@ -18,7 +18,6 @@ mongoose
   });
 
 //REGISTER NEW USER
-
 app.post("/api/register", async (req, res) => {
   try {
     const user = await User.findOne({
@@ -48,7 +47,6 @@ app.post("/api/signin", async (req, res) => {
   const user = await User.findOne({
     email: req.body.email,
   });
-  console.log(req.body);
   if (!user) {
     return res.status(401).json("Invalid email!");
   } else if (user.password === req.body.password) {
@@ -77,7 +75,22 @@ app.put("/api/cart", async (req, res) => {
         url: url,
       });
     }
+    console.log("update cart");
+    console.log(user.cart);
     await user.save();
+    return res.status(200).json(user);
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+});
+
+//REMOVE ITEM FROM CART
+app.put("/api/cart-remove", async (req, res) => {
+  try {
+    const { userID, id } = req.body;
+    let user = await User.findById(userID);
+    let index = user.cart.findIndex((item) => item._id === id);
+    user.cart.splice(index, 1);
     return res.status(200).json(user);
   } catch (err) {
     return res.status(500).json(err);
@@ -94,7 +107,7 @@ app.get("/api/products", async (req, res) => {
   }
 });
 
-//GET ONE PRODUCT
+//GET ONE PRODUCT BY ID
 app.get("/api/products/:id", async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
@@ -105,19 +118,32 @@ app.get("/api/products/:id", async (req, res) => {
 });
 
 //CREATE NEW PRODUCT
-// app.get("/api/product", async (req, res) => {
-//   res.send("success!");
-// });
-
-app.post("/api/product", async (req, res) => {
-  const newProduct = new Product(req.body);
+app.post("/api/newProduct", async (req, res) => {
   try {
+    const newProduct = new Product({
+      name: req.body.productName,
+      price: req.body.price,
+      stockQty: req.body.inStockQuantity,
+      category: req.body.category,
+      description: req.body.productDescription,
+      imgUrl: req.body.url,
+    });
     const savedProduct = await newProduct.save();
-    res.status(200).json(savedProduct);
-  } catch (err) {
-    res.status(500).json(err);
+    res.status(200).json("Product has been added!");
+  } catch (error) {
+    res.status(500).json(error);
   }
 });
+
+// app.post("/api/product", async (req, res) => {
+//   const newProduct = new Product(req.body);
+//   try {
+//     const savedProduct = await newProduct.save();
+//     res.status(200).json(savedProduct);
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
 
 app.listen("8080", () => {
   console.log("Backend is running.");

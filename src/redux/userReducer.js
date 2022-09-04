@@ -45,6 +45,21 @@ export const updateCart = createAsyncThunk(
   }
 );
 
+export const removeItem = createAsyncThunk(
+  "user/removeItem",
+  async (userID, id, thunkAPI) => {
+    try {
+      const res = await api.removeItem(userID, id);
+      const data = await res.json();
+      // console.log("removeItem");
+      // console.log(data);
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: "user",
   initialState: {
@@ -101,6 +116,17 @@ const userSlice = createSlice({
         state.loading = false;
       })
       .addCase(updateCart.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(removeItem.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(removeItem.fulfilled, (state, action) => {
+        //console.log(action.payload);
+        state.cart = action.payload.cart;
+        state.loading = false;
+      })
+      .addCase(removeItem.rejected, (state, action) => {
         state.loading = false;
       });
   },

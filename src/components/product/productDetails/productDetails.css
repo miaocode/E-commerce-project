@@ -32,3 +32,19 @@
   color: gray;
   padding: 10px 0px;
 }
+
+@media (max-width: 995px) {
+  .product-details {
+    background-color: white;
+    margin: 5px;
+    padding: 5px;
+    flex: 1 0 auto;
+    text-align: center;
+  }
+  .product-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}

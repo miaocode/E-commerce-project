@@ -10,6 +10,7 @@ const onSearch = (value) => console.log(value);
 const EditProduct = () => {
   const { id } = useParams();
   const [product, setProduct] = useState({});
+
   useEffect(() => {
     const getProduct = async () => {
       try {
@@ -27,12 +28,13 @@ const EditProduct = () => {
     };
     getProduct();
   }, [id]);
+
   return (
     <div className="create-product">
       <h3>Edit Product</h3>
       <Form className="product-form" layout="vertical">
         <Form.Item label="Product Name">
-          <Input value={product.name} />
+          <Input value="" initialValue={product.name} />
         </Form.Item>
         <Form.Item label="Product Description">
           <TextArea rows={4} value={product.description} />

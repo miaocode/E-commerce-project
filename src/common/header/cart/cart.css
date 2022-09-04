@@ -1,14 +1,13 @@
 .shopping-cart {
   width: 26% !important;
-  height: 50%;
-  /* overflow-y: scroll; */
+  height: 65%;
   background-color: whitesmoke;
   position: absolute;
   left: 72%;
   top: 10%;
 }
 h2 {
-  background-color: lightgray;
+  /* background-color: lightgray; */
   padding: 5px 15px;
   /* display: flex;
   flex: 0 0 auto; */
@@ -18,20 +17,39 @@ h2 {
   flex-direction: column;
   padding: 10px;
   overflow-y: auto;
-  max-height: 420px;
+  max-height: 550px;
 }
 
 .cart-list {
   overflow-y: scroll;
+  padding-left: 15px;
+}
+ul {
+  padding-left: 0;
 }
 
+.cart-summary {
+  padding: 20px 20px 0px 20px;
+}
+
+h2,
+.subtotal {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-weight: 600;
+}
+
+/* cartItem css */
 .cart-item {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  /* margin: 0px, 25px; */
+  /* height: 150px; */
 }
 .cart-item img {
-  width: 60%;
-  height: auto;
+  width: 110px;
 }
 
 .product-info {

@@ -6,15 +6,16 @@ import ProductCard from "../productCard/productCard";
 import "./products.css";
 
 const Products = ({ cartQty, setCartQty, setCartSum }) => {
-  const { isAdmin } = useSelector((state) => state.user);
+  const { isAdmin, cart } = useSelector((state) => state.user);
   const product = useSelector((state) => state.product.product);
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
   useEffect(() => {
     dispatch(loadProducts());
-  }, [product]);
+  }, []);
 
+  //  console.log(cart);
   const productList = product.map((product) => {
     return (
       <ProductCard

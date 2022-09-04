@@ -1,6 +1,5 @@
 import { React } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Cart from "./cart/cart";
 import { logOut } from "../../redux/userReducer";
 import {
   setAccountModalContent,
@@ -13,7 +12,6 @@ import "./header.css";
 
 const Header = () => {
   const dispatch = useDispatch();
-  const showCart = useSelector((state) => state.modal.cartModal.visible);
   const { userID, isLoggedIn, isAdmin, cart } = useSelector(
     (state) => state.user
   );
@@ -38,7 +36,7 @@ const Header = () => {
   };
 
   const handleClick = () => {
-    dispatch(setCartModualVisible(!showCart));
+    dispatch(setCartModualVisible(true));
   };
 
   return (
@@ -47,6 +45,7 @@ const Header = () => {
       <div className="search-bar">
         <input placeholder="Search" />
       </div>
+
       <div className="signin-button">
         {isLoggedIn ? (
           <Button type="primary" onClick={handleSignOut}>
@@ -61,11 +60,11 @@ const Header = () => {
         )}
       </div>
       <div className="total-amount">
-        <span onClick={handleClick}>
+        <div onClick={handleClick}>
           <ShoppingCartOutlined />
-        </span>
+        </div>
         <span id="cartQty">{cartQantity}</span>
-        <span id="cartAmount">${cartAmount}</span>
+        <div id="cartAmount">${cartAmount.toFixed(2)}</div>
       </div>
     </div>
   );
