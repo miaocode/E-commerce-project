@@ -9,25 +9,17 @@ const CartItem = ({ id, imgUrl, name, price }) => {
   const dispatch = useDispatch();
   const cartProduct = cart.find((item) => item._id === id);
   const quantity = cartProduct ? cartProduct.quantity : 0;
-  // const quantity = (function () {
-  //   if (cartProduct) {
-  //     return cartProduct.quantity;
-  //   } else {
-  //     return 0;
-  //   }
-  // })();
 
-  console.log(cart);
   const handleClick = (userID, productID, url, qty, name, price) => {
-    dispatch(updateCart({ userID, productID, url, qty, name, price }));
-    console.log("updat cart");
-    console.log(cart);
+    if (quantity === 1 && qty === -1) {
+      dispatch(removeItem({ userID, id }));
+    } else {
+      dispatch(updateCart({ userID, productID, url, qty, name, price }));
+    }
   };
 
   const handleRemove = (userID, id) => {
     dispatch(removeItem({ userID, id }));
-    console.log("after remove");
-    console.log(cart);
   };
   return (
     <>
@@ -36,6 +28,7 @@ const CartItem = ({ id, imgUrl, name, price }) => {
         <div className="product-info">
           <span>{name}</span>
           <span>${price}</span>
+          {/* {console.log(cart)} */}
           <div className="cartItem-buttons">
             {quantity ? (
               <div>
@@ -63,9 +56,7 @@ const CartItem = ({ id, imgUrl, name, price }) => {
               </button>
             )}
 
-            <button type="primary" onClick={() => handleRemove(userID, id)}>
-              Remove
-            </button>
+            <button onClick={() => handleRemove(userID, id)}>Remove</button>
           </div>
         </div>
       </li>

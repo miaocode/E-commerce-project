@@ -29,6 +29,8 @@ const SignUpModalContent = ({ user, setUser, setModalContent, setVisible }) => {
       try {
         dispatch(register({ email: email, password: password }));
         dispatch(setAccountModalVisible(false));
+        setEmail("");
+        setPassword("");
       } catch (error) {
         alert(error);
       }

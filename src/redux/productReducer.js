@@ -40,6 +40,32 @@ export const createProduct = createAsyncThunk(
   }
 );
 
+export const updateProduct = createAsyncThunk(
+  "product/updateProduct",
+  async (productInfo, thunkAPI) => {
+    try {
+      const res = await api.updateProduct(productInfo);
+      const data = await res.json();
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const deleteProduct = createAsyncThunk(
+  "product/deleteProduct",
+  async (productId, thunkAPI) => {
+    try {
+      const res = await api.deleteProduct(productId);
+      const data = await res.json();
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
 export const productSlice = createSlice({
   name: "product",
   initialState: {
@@ -75,6 +101,26 @@ export const productSlice = createSlice({
         state.loading = false;
       })
       .addCase(createProduct.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(updateProduct.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(updateProduct.fulfilled, (state, action) => {
+        state.product = action.payload;
+        state.loading = false;
+      })
+      .addCase(updateProduct.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(deleteProduct.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(deleteProduct.fulfilled, (state, action) => {
+        state.product = action.payload;
+        state.loading = false;
+      })
+      .addCase(deleteProduct.rejected, (state, action) => {
         state.loading = false;
       });
   },

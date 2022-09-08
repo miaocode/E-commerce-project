@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { updateCart } from "../../../redux/userReducer";
+import { removeItem, updateCart } from "../../../redux/userReducer";
 import "./productCard.css";
 
 const ProductCard = ({ id, imgUrl, name, price }) => {
@@ -9,17 +9,23 @@ const ProductCard = ({ id, imgUrl, name, price }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const cartProduct = cart.find((item) => item._id === id);
-  const quantity = (function () {
-    if (cartProduct) {
-      return cartProduct.quantity;
-    } else {
-      return 0;
-    }
-  })();
+  const quantity = cartProduct ? cartProduct.quantity : 0;
+  // const quantity = (function () {
+  //   if (cartProduct) {
+  //     return cartProduct.quantity;
+  //   } else {
+  //     return 0;
+  //   }
+  // })();
 
   const handleClick = (userID, productID, url, qty, name, price) => {
-    dispatch(updateCart({ userID, productID, url, qty, name, price }));
-    //console.log(cart);
+    if (!userID) {
+      alert("Please sign in to add products!");
+    } else if (quantity === 1 && qty === -1) {
+      dispatch(removeItem({ userID, id }));
+    } else {
+      dispatch(updateCart({ userID, productID, url, qty, name, price }));
+    }
   };
 
   return (
@@ -29,6 +35,7 @@ const ProductCard = ({ id, imgUrl, name, price }) => {
           <img src={imgUrl} alt="" />
         </Link>
       </div>
+
       <div className="product-info">
         <p id="product-name">{name}</p>
         <p id="product-price">${price}</p>

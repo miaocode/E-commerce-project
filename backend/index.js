@@ -75,8 +75,8 @@ app.put("/api/cart", async (req, res) => {
         url: url,
       });
     }
-    console.log("update cart");
-    console.log(user.cart);
+    // console.log("update cart");
+    // console.log(user.cart);
     await user.save();
     return res.status(200).json(user);
   } catch (err) {
@@ -91,7 +91,8 @@ app.put("/api/cart-remove", async (req, res) => {
     let user = await User.findById(userID);
     let index = user.cart.findIndex((item) => item._id === id);
     user.cart.splice(index, 1);
-    return res.status(200).json(user);
+    const updatedUser = await user.save();
+    return res.status(200).json(updatedUser);
   } catch (err) {
     return res.status(500).json(err);
   }
@@ -135,15 +136,33 @@ app.post("/api/newProduct", async (req, res) => {
   }
 });
 
-// app.post("/api/product", async (req, res) => {
-//   const newProduct = new Product(req.body);
-//   try {
-//     const savedProduct = await newProduct.save();
-//     res.status(200).json(savedProduct);
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
+// UPDATE PRODUCT
+app.put("/api/editProduct", async (req, res) => {
+  try {
+    const { id, values } = req.body;
+    let product = await Product.findById(id);
+    Object.assign(product, values);
+    const updatedProduct = product.save();
+    return res.status(200).json(updatedProduct);
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+});
+
+//DELETE PRODUCT
+app.delete("/api/editProduct/:id", async (req, res) => {
+  console.log("delete id" + req.params.id);
+  const product = await Product.findById(req.params.id);
+  if (product) {
+    await product.remove();
+    const allProducts = await Product.find();
+    console.log("all" + allProducts);
+    res.status(200).json(allProducts);
+  } else {
+    res.status(500).json("Product doesn't exist!");
+    throw new Error("Product doesn't exist!");
+  }
+});
 
 app.listen("8080", () => {
   console.log("Backend is running.");

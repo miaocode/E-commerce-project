@@ -1,5 +1,6 @@
 .shopping-cart {
   width: 26% !important;
+  min-width: 300px;
   height: 65%;
   background-color: whitesmoke;
   position: absolute;
@@ -55,4 +56,19 @@ h2,
 .product-info {
   display: flex;
   flex-direction: column;
+}
+#discount {
+  width: 100px;
+  height: 25px;
+}
+
+@media (max-width: 820px) {
+  .shopping-cart {
+    min-width: 300px;
+    height: 500px;
+    background-color: whitesmoke;
+    position: absolute;
+    left: 30%;
+    top: 10%;
+  }
 }

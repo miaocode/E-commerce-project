@@ -8,6 +8,12 @@
   display: flex;
   /* flex-direction: row; */
 }
+.product-details-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .text-detail {
   padding: 20px 100px;
   text-align: left;

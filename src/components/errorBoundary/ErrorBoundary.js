@@ -4,7 +4,7 @@ import "./ErrorBoundary.css";
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { error: null, errorInfo: null };
+    this.state = { error: null, errorInfo: null, hasError: false };
   }
 
   componentDidCatch(error, errorInfo) {
@@ -13,6 +13,7 @@ class ErrorBoundary extends React.Component {
       error: error,
       errorInfo: errorInfo,
     });
+    //console.log("caught error");
     // You can also log error messages to an error reporting service here
   }
 

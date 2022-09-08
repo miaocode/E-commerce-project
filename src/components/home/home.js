@@ -18,11 +18,13 @@ const Home = () => {
   const showCart = useSelector((state) => state.modal.cartModal.visible);
 
   return (
-    <div className="body">
-      <MyHeader cartQty={cartQty} cartSum={cartSum} />
+    <div className="container">
+      <div className="header">
+        <MyHeader cartQty={cartQty} cartSum={cartSum} />
+      </div>
       <ErrorBoundary>
-        <Content />
-        <div className="routes">
+        <div className="body">
+          <Content />
           <Routes>
             <Route
               path="/products"
@@ -50,7 +52,9 @@ const Home = () => {
         </div>
       </ErrorBoundary>
       {showCart && <ShoppingCart />}
-      <Footer />
+      <div className="footer">
+        <Footer />
+      </div>
     </div>
   );
 };

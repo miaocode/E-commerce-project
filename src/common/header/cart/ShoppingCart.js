@@ -1,4 +1,4 @@
-import { React } from "react";
+import { React, useState } from "react";
 import { setCartModualVisible } from "../../../redux/modalReducer";
 import { useSelector, useDispatch } from "react-redux";
 import CartItem from "./cartItem";
@@ -7,11 +7,9 @@ import { Button } from "antd";
 import "./cart.css";
 
 const ShoppingCart = () => {
-  // const showCart = useSelector((state) => state.modal.cartModal.visible);
+  const [discountCode, setDiscountCode] = useState("");
+  const { cart } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const { userID, isLoggedIn, isAdmin, cart } = useSelector(
-    (state) => state.user
-  );
   const handleClick = () => {
     dispatch(setCartModualVisible(false));
   };
@@ -22,14 +20,19 @@ const ShoppingCart = () => {
   })();
 
   const cartAmount = (function () {
-    return cart.reduce((pre, cur) => {
+    const totalBeforeTax = cart.reduce((pre, cur) => {
       return pre + cur.quantity * cur.price;
     }, 0);
+    if (discountCode === "SAVE20") {
+      return (totalBeforeTax * 0.8).toFixed(2);
+    } else {
+      return totalBeforeTax;
+    }
   })();
 
-  const tax = (total) => {
-    return (total * 0.0825).toFixed(2);
-  };
+  const tax = (cartAmount * 0.0825).toFixed(2);
+  const total = (Number(cartAmount) + Number(tax)).toFixed(2);
+
   const cartItem = cart.map((product) => {
     if (product.quantity) {
       return (
@@ -43,6 +46,7 @@ const ShoppingCart = () => {
       );
     }
   });
+
   return (
     <div className="shopping-cart">
       <h2>
@@ -54,16 +58,23 @@ const ShoppingCart = () => {
         </div>
         <div className="cart-summary">
           <div className="subtotal">
-            <span>Subtotal:</span> <span>${cartAmount.toFixed(2)}</span>
+            <span>Subtotal:</span> <span>${cartAmount}</span>
           </div>
           <div className="subtotal">
-            <span>Tax:</span> <span>${tax(cartAmount)}</span>
+            <span>Tax:</span> <span>${tax}</span>
           </div>
           <div className="subtotal">
-            <span>Discount:</span> <span></span>
+            <span>Discount:</span>
+            <input
+              id="discount"
+              name="discount"
+              placeholder="SAVE20"
+              value={discountCode}
+              onChange={(e) => setDiscountCode(e.target.value)}
+            ></input>
           </div>
           <div className="subtotal">
-            <span>Estimated total:</span> <span></span>
+            <span>Estimated total:</span> <span>${total}</span>
           </div>
           <Button type="primary" block>
             Continue to checkout

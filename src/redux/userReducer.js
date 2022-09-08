@@ -63,6 +63,7 @@ export const removeItem = createAsyncThunk(
 const userSlice = createSlice({
   name: "user",
   initialState: {
+    userID: "",
     email: "",
     isLoggedIn: false,
     loading: false,
@@ -75,6 +76,7 @@ const userSlice = createSlice({
       state.email = "";
       state.cart = [];
       state.isAdmin = false;
+      state.userID = "";
     },
   },
   extraReducers: (builder) => {
@@ -112,6 +114,7 @@ const userSlice = createSlice({
         state.loading = true;
       })
       .addCase(updateCart.fulfilled, (state, action) => {
+        //console.log(action.payload.cart);
         state.cart = action.payload.cart;
         state.loading = false;
       })
@@ -122,7 +125,6 @@ const userSlice = createSlice({
         state.loading = true;
       })
       .addCase(removeItem.fulfilled, (state, action) => {
-        //console.log(action.payload);
         state.cart = action.payload.cart;
         state.loading = false;
       })

@@ -49,6 +49,7 @@ const updateCart = async (cartInfo) => {
 };
 
 const removeItem = async (userItemId) => {
+  // console.log(userItemId);
   const res = await fetch("http://localhost:8080/api/cart-remove", {
     method: "PUT",
     headers: {
@@ -90,7 +91,6 @@ const getProduct = async (id) => {
 
 //CREATE NEW PRODUCT
 const createProduct = async (productInfo) => {
-  console.log(productInfo);
   const res = await fetch("http://localhost:8080/api/newProduct", {
     method: "POST",
     headers: {
@@ -101,6 +101,42 @@ const createProduct = async (productInfo) => {
   return res;
 };
 
+//UPDATE PRODUCT
+const updateProduct = async (productInfo) => {
+  // console.log(productInfo);
+  const res = await fetch("http://localhost:8080/api/editProduct", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(productInfo),
+  });
+  if (!res.ok) {
+    const message = `An error has occured: ${res.status}`;
+    throw new Error(message);
+  } else {
+    return res;
+  }
+};
+
+//DELETE PRODUCT
+const deleteProduct = async (id) => {
+  //console.log(id);
+  const res = await fetch(`http://localhost:8080/api/editProduct/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    //body: JSON.stringify(),
+  });
+  if (!res.ok) {
+    const message = `An error has occured: ${res.status}`;
+    throw new Error(message);
+  } else {
+    return res;
+  }
+};
+
 export default {
   register,
   signIn,
@@ -109,4 +145,6 @@ export default {
   updateCart,
   removeItem,
   createProduct,
+  updateProduct,
+  deleteProduct,
 };

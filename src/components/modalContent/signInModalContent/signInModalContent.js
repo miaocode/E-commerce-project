@@ -22,6 +22,8 @@ const SignInModalContent = () => {
       try {
         dispatch(logIn({ email: email, password: password }));
         dispatch(setAccountModalVisible(false));
+        setEmail("");
+        setPassword("");
       } catch (error) {
         alert(error);
       }

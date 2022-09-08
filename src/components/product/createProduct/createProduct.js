@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import { useDispatch } from "react-redux";
-import { createProduct } from "../../../redux/productReducer";
+import { createProduct, loadProducts } from "../../../redux/productReducer";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { Form, Input, Button, Select, InputNumber } from "antd";
 import { Image } from "antd";
@@ -13,6 +13,7 @@ const CreateProduct = () => {
   const [url, setUrl] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const onFinish = (values) => {
     dispatch(createProduct(values));
     navigate("/products");
@@ -22,9 +23,20 @@ const CreateProduct = () => {
     setUrl(values);
   };
 
+  const handleBackToHome = () => {
+    dispatch(loadProducts());
+    setTimeout(() => {
+      navigate("/products");
+    }, 200);
+  };
+
   return (
     <div className="create-product">
-      <h2>Create Product</h2>
+      <div className="product-details-header">
+        <h2>Create Product</h2>
+        <Button onClick={handleBackToHome}>Back to Home</Button>
+      </div>
+
       <Form className="product-form" layout="vertical" onFinish={onFinish}>
         <Form.Item
           label="Product Name"

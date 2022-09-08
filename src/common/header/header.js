@@ -8,10 +8,12 @@ import {
 } from "../../redux/modalReducer";
 import { UserOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { Button } from "antd";
+import { useMediaQuery } from "react-responsive";
 import "./header.css";
 
 const Header = () => {
   const dispatch = useDispatch();
+  const mobileDevice = useMediaQuery({ maxDeviceWidth: 820 });
   const { userID, isLoggedIn, isAdmin, cart } = useSelector(
     (state) => state.user
   );
@@ -39,31 +41,47 @@ const Header = () => {
     dispatch(setCartModualVisible(true));
   };
 
+  const signInButton = mobileDevice ? (
+    <div type="primary" onClick={handleSignIn}>
+      <UserOutlined />
+    </div>
+  ) : (
+    <Button type="primary" onClick={handleSignIn}>
+      <UserOutlined />
+      Sign In
+    </Button>
+  );
+
+  const signOutButton = mobileDevice ? (
+    <div type="primary" onClick={handleSignOut}>
+      <UserOutlined />
+    </div>
+  ) : (
+    <Button type="primary" onClick={handleSignOut}>
+      <UserOutlined />
+      Sign Out
+    </Button>
+  );
+
   return (
     <div className="header-container">
-      <h1 id="management">Management</h1>
+      <div id="management">
+        {mobileDevice ? <p id="M">M</p> : <p id="Mgt">Management</p>}
+        <span>Chuwa</span>
+      </div>
+
       <div className="search-bar">
         <input placeholder="Search" />
       </div>
 
       <div className="signin-button">
-        {isLoggedIn ? (
-          <Button type="primary" onClick={handleSignOut}>
-            <UserOutlined />
-            SIGN OUT
-          </Button>
-        ) : (
-          <Button type="primary" onClick={handleSignIn}>
-            <UserOutlined />
-            SIGN IN
-          </Button>
-        )}
+        {isLoggedIn ? signOutButton : signInButton}
       </div>
       <div className="total-amount">
         <div onClick={handleClick}>
           <ShoppingCartOutlined />
         </div>
-        <span id="cartQty">{cartQantity}</span>
+        {mobileDevice ? <></> : <span id="cartQty">{cartQantity}</span>}
         <div id="cartAmount">${cartAmount.toFixed(2)}</div>
       </div>
     </div>
