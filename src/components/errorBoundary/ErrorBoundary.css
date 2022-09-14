@@ -1,0 +1,13 @@
+.error-boundary {
+  flex: 1 0 auto;
+  flex-direction: column;
+  min-height: 100%;
+  margin: 20px;
+  padding: 10px;
+}
+
+@media (max-width: 768px) {
+  .error-boundary {
+    text-align: center;
+  }
+}

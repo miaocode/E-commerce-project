@@ -1,36 +1,100 @@
-import React from "react";
+import { React, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { logOut } from "../../redux/userReducer";
+import {
+  setAccountModalContent,
+  setAccountModalVisible,
+  setCartModualVisible,
+} from "../../redux/modalReducer";
+import { filterProduct } from "../../redux/productReducer";
 import { UserOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { Button } from "antd";
-import { LOGIN_FORM } from "../../content/form";
+import { useMediaQuery } from "react-responsive";
 import "./header.css";
-import { useSelector } from "react-redux";
 
-const Header = ({ setVisible, isLoggedIn }) => {
-  const quantity = useSelector((state) => state.cart.quantity);
-  const total = useSelector((state) => state.cart.total);
+const Header = () => {
+  const [searchField, setSearchField] = useState("");
+  const dispatch = useDispatch();
+  const mobileDevice = useMediaQuery({ maxDeviceWidth: 820 });
+  const { userID, isLoggedIn, isAdmin, cart } = useSelector(
+    (state) => state.user
+  );
+
+  const cartQantity = (function () {
+    return cart.reduce((pre, cur) => {
+      return pre + cur.quantity;
+    }, 0);
+  })();
+
+  const cartAmount = (function () {
+    return cart.reduce((pre, cur) => {
+      return pre + cur.quantity * cur.price;
+    }, 0);
+  })();
+
+  const handleSignIn = () => {
+    dispatch(setAccountModalVisible(true), setAccountModalContent("signIn"));
+  };
+  const handleSignOut = () => {
+    dispatch(logOut());
+  };
+
+  const handleClick = () => {
+    dispatch(setCartModualVisible(true));
+  };
+
+  const signInButton = mobileDevice ? (
+    <div type="primary" onClick={handleSignIn}>
+      <UserOutlined />
+    </div>
+  ) : (
+    <Button type="primary" onClick={handleSignIn}>
+      <UserOutlined />
+      Sign In
+    </Button>
+  );
+
+  const signOutButton = mobileDevice ? (
+    <div type="primary" onClick={handleSignOut}>
+      <UserOutlined />
+    </div>
+  ) : (
+    <Button type="primary" onClick={handleSignOut}>
+      <UserOutlined />
+      Sign Out
+    </Button>
+  );
+
+  const handleChange = (e) => {
+    setSearchField(e.target.value);
+    //dispatch(filterProduct(setSearchField));
+  };
+
   return (
     <div className="header-container">
-      <h1 id="management">Management</h1>
+      <div id="management">
+        {mobileDevice ? <p id="M">M</p> : <p id="Mgt">Management</p>}
+        <span>Shop</span>
+      </div>
 
       <div className="search-bar">
-        <input placeholder="Search" />
+        <input
+          placeholder="Search products"
+          type="search"
+          value={searchField}
+          onChange={(e) => handleChange(e)}
+        />
       </div>
+
       <div className="signin-button">
-        <Button
-          type="primary"
-          onClick={() => {
-            setVisible(true);
-          }}
-        >
-          <UserOutlined />
-          {isLoggedIn ? LOGIN_FORM.SIGNOUT : LOGIN_FORM.SIGNIN}
-        </Button>
+        {isLoggedIn ? signOutButton : signInButton}
       </div>
-      <div className="cart-icon"></div>
       <div className="total-amount">
-        <ShoppingCartOutlined />
-        <span id="cartQty">{quantity}</span>
-        <span id="cartAmount">$0.00</span>
+        <div onClick={handleClick}>
+          <ShoppingCartOutlined />
+        </div>
+        {mobileDevice ? <></> : <span id="cartQty">{cartQantity}</span>}
+        <div id="cartAmount">${cartAmount.toFixed(2)}</div>
       </div>
     </div>
   );

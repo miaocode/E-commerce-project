@@ -17,25 +17,32 @@ mongoose
     console.log(err);
   });
 
-//Register new user
-app.get("/api/register", async (req, res) => {
-  res.send("success!");
-});
-
+//REGISTER NEW USER
 app.post("/api/register", async (req, res) => {
   try {
-    const newUser = new User({
+    const user = await User.findOne({
       email: req.body.email,
-      password: req.body.password,
-    });
-    const savedUser = await newUser.save();
-    res.status(200).json("You have been signed up!");
-  } catch (err) {
-    res.status(400).json(err);
+    }).exec();
+    if (user !== null) {
+      res.status(400).json("Email has been registed!");
+    } else {
+      try {
+        const newUser = new User({
+          email: req.body.email,
+          password: req.body.password,
+        });
+        const savedUser = await newUser.save();
+        res.status(200).json("You have been signed up!");
+      } catch (err) {
+        res.status(500).json("Something went wrong...");
+      }
+    }
+  } catch (error) {
+    res.status(500).json(error);
   }
 });
 
-//SignIn
+//SIGN IN
 app.post("/api/signin", async (req, res) => {
   const user = await User.findOne({
     email: req.body.email,
@@ -49,50 +56,49 @@ app.post("/api/signin", async (req, res) => {
   }
 });
 
-//update password
-
-app.post("/api/resetpassword", async (res, req) => {
+//UPDATE CART
+app.put("/api/cart", async (req, res) => {
   try {
-    const user = await User.findOne({
-      email: req.body.email,
+    const { userID, productID, url, qty, name, price } = req.body;
+    let user = await User.findById(userID);
+    let product = user.cart.find((item) => {
+      return item._id === productID;
     });
-    if (user.password === req.body.password) {
-      try {
-        const updatedPassword = { password: req.body.newPassword };
-        const updatedUser = await User.findOneAndUpdate(
-          { email: req.body.email },
-          updatedPassword,
-          {
-            new: true,
-          }
-        );
-        return res.status(200).json(updatedUser);
-      } catch (err) {
-        res.status(500).json(err);
-      }
+    if (product) {
+      product.quantity = product.quantity + qty;
+    } else {
+      user.cart.push({
+        _id: productID,
+        name: name,
+        quantity: qty,
+        price: price,
+        url: url,
+      });
     }
+    // console.log("update cart");
+    // console.log(user.cart);
+    await user.save();
+    return res.status(200).json(user);
   } catch (err) {
-    return res.status(400).json(err);
+    return res.status(500).json(err);
   }
 });
 
-//Create new product
-// app.get("/api/product", async (req, res) => {
-//   res.send("success!");
-// });
-
-app.post("/api/product", async (req, res) => {
-  const newProduct = new Product(req.body);
+//REMOVE ITEM FROM CART
+app.put("/api/cart-remove", async (req, res) => {
   try {
-    const savedProduct = await newProduct.save();
-    res.status(200).json(savedProduct);
+    const { userID, id } = req.body;
+    let user = await User.findById(userID);
+    let index = user.cart.findIndex((item) => item._id === id);
+    user.cart.splice(index, 1);
+    const updatedUser = await user.save();
+    return res.status(200).json(updatedUser);
   } catch (err) {
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
 });
 
-//get all products
-
+//GET ALL PRODUCTS
 app.get("/api/products", async (req, res) => {
   try {
     const products = await Product.find();
@@ -102,30 +108,59 @@ app.get("/api/products", async (req, res) => {
   }
 });
 
-//GET PRODUCT
+//GET ONE PRODUCT BY ID
 app.get("/api/products/:id", async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
-    console.log(product);
     res.status(200).json(product);
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-//UPDATE
-app.put("/:id", async (req, res) => {
+//CREATE NEW PRODUCT
+app.post("/api/newProduct", async (req, res) => {
   try {
-    const updatedProduct = await Product.findByIdAndUpdate(
-      req.params.id,
-      {
-        $set: req.body,
-      },
-      { new: true }
-    );
-    res.status(200).json(updatedProduct);
+    const newProduct = new Product({
+      name: req.body.productName,
+      price: req.body.price,
+      stockQty: req.body.inStockQuantity,
+      category: req.body.category,
+      description: req.body.productDescription,
+      imgUrl: req.body.url,
+    });
+    const savedProduct = await newProduct.save();
+    res.status(200).json("Product has been added!");
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+// UPDATE PRODUCT
+app.put("/api/editProduct", async (req, res) => {
+  try {
+    const { id, values } = req.body;
+    let product = await Product.findById(id);
+    Object.assign(product, values);
+    const updatedProduct = product.save();
+    return res.status(200).json(updatedProduct);
   } catch (err) {
-    res.status(500).json(err);
+    return res.status(500).json(err);
+  }
+});
+
+//DELETE PRODUCT
+app.delete("/api/editProduct/:id", async (req, res) => {
+  console.log("delete id" + req.params.id);
+  const product = await Product.findById(req.params.id);
+  if (product) {
+    await product.remove();
+    const allProducts = await Product.find();
+    console.log("all" + allProducts);
+    res.status(200).json(allProducts);
+  } else {
+    res.status(500).json("Product doesn't exist!");
+    throw new Error("Product doesn't exist!");
   }
 });
 

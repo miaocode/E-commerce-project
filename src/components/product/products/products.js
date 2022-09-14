@@ -1,51 +1,56 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import ProductCard from "../../../common/productCard/productCard";
-import api from "../../../api/index";
+import { loadProducts } from "../../../redux/productReducer";
+import ProductCard from "../productCard/productCard";
+import { LoadingOutlined } from "@ant-design/icons";
 import "./products.css";
 
-const Products = ({ isLoggedIn, cartQty, setCartQty, setCartSum }) => {
-  const [product, setProduct] = useState([]);
-  const [filters, setFilters] = useState({});
-  const [sort, setSort] = useState("price");
+const Products = ({ cartQty, setCartQty, setCartSum }) => {
+  const { isAdmin } = useSelector((state) => state.user);
+  const product = useSelector((state) => state.product.product);
+  const isLoading = useSelector((state) => state.product.loading);
+  const dispatch = useDispatch();
   let navigate = useNavigate();
 
   useEffect(() => {
-    const getAllProduct = async () => {
-      try {
-        const res = await api.getProducts();
-        const data = await res.json();
-        setProduct(data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getAllProduct();
+    dispatch(loadProducts());
   }, []);
 
+  if (isLoading) {
+    return (
+      <div>
+        {/* {console.log("is loading")} */}
+        <LoadingOutlined />
+      </div>
+    );
+  }
+
+  // console.log(product);
   const productList = product.map((product) => {
     return (
       <ProductCard
         key={product._id}
         id={product._id}
-        category={product.category}
         imgUrl={product.imgUrl}
-        productName={product.name}
+        name={product.name}
         price={product.price}
-        descrioption={product.description}
-        stockQty={product.stockQty}
-        cartQty={cartQty}
-        setCartQty={setCartQty}
-        setCartSum={setCartSum}
-        isLoggedIn={isLoggedIn}
       />
     );
   });
+
+  if (isLoading) {
+    return (
+      <div>
+        {/* {console.log("is loading")} */}
+        <LoadingOutlined />
+      </div>
+    );
+  }
   return (
     <main>
       <h3>Products</h3>
-
-      {isLoggedIn && (
+      {isAdmin && (
         <button
           type="button"
           className="btn btn-primary"
@@ -56,17 +61,7 @@ const Products = ({ isLoggedIn, cartQty, setCartQty, setCartSum }) => {
           Add Product
         </button>
       )}
-      <select onChange={(e) => setSort(e.target.value)}>
-        <option key="1" value="newest">
-          Newest
-        </option>
-        <option key="2" value="asc">
-          Price (low to high)
-        </option>
-        <option key="3" value="desc">
-          Price (high to low)
-        </option>
-      </select>
+
       <div className="products-container">{productList}</div>
     </main>
   );

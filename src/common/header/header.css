@@ -1,46 +1,89 @@
 .header-container {
   color: white;
   display: flex;
-  flex: 0 0 auto;
   flex-direction: row;
-  justify-content: space-evenly;
-  /* align-items: center; */
+  justify-content: space-between;
+  align-items: center;
   padding: 8px 64px;
   height: auto;
   width: 100%;
   background: #111827;
+  flex-shrink: 0;
 }
 #management {
-  font-size: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   color: white;
+}
+#M,
+#Mgt {
+  font-size: 25px;
+}
+#Mgt {
+  padding-right: 15px;
+  margin-bottom: 10px;
+}
+.search-bar {
+  color: black;
 }
 
 input {
   width: 350px;
-  height: 48px;
+  height: 38px;
 }
 
 .total-amount {
-  font-size: 15px;
-  padding-top: 15px;
+  display: flex;
+  flex-direction: row;
+  font-size: 16px;
+  /* justify-content: space-evenly;
+  padding-top: 15px; */
 }
 
 #cartQty {
-  /* font-size: 15px; */
   background-color: red;
-  height: 15px;
-  width: 15px;
+  width: 25px;
+  text-align: center;
   border-radius: 50%;
-  /* position: fixed; */
-  /* padding-top: -15px;
-  padding-left: 3px; */
-
-  /* margin-left: -10px;
-  margin-bottom: 15px;
-  
-  padding-left: 5px; */
 }
 
-#cartAmount {
-  margin-left: 10px;
+@media (max-width: 768px) {
+  .error-boundary {
+    text-align: center;
+  }
+}
+
+@media (max-width: 820px) {
+  .header-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 0px 15px;
+    color: white;
+    flex: 0 0 auto;
+    height: 121px;
+    gap: 0px;
+    justify-content: center;
+    /* align-items: flex-start; */
+  }
+  .total-amount {
+    display: flex;
+    flex-direction: row;
+    font-size: 16px;
+    margin-left: 240px;
+    margin-top: -45px;
+    position: fixed;
+  }
+  .signin-button {
+    margin-left: 120px;
+    margin-top: -45px;
+    position: fixed;
+  }
+
+  #M {
+    margin-bottom: 5px;
+    margin-left: -175px;
+    font-weight: 800;
+  }
 }

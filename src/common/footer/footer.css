@@ -1,15 +1,24 @@
 footer {
   color: white;
   background-color: #111827;
-  width: 100%;
-  height: 85px;
   display: flex;
-  flex: 0 0 auto;
   padding: 15px 50px;
   justify-content: space-between;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .social-media {
   font-size: large;
+}
+
+.footer-links a {
+  padding-right: 10px;
+}
+
+@media (max-width: 768px) {
+  footer {
+    display: flex;
+    flex-direction: column;
+  }
 }
