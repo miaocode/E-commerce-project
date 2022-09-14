@@ -15,6 +15,8 @@ import ErrorBoundary from "../errorBoundary/ErrorBoundary";
 const Home = () => {
   const [cartQty, setCartQty] = useState(0);
   const [cartSum, setCartSum] = useState(0);
+  // const product = useSelector((state) => state.product.product);
+  const filteredProduct = 
   const showCart = useSelector((state) => state.modal.cartModal.visible);
 
   return (

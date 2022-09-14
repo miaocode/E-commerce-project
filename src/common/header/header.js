@@ -1,4 +1,4 @@
-import { React } from "react";
+import { React, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { logOut } from "../../redux/userReducer";
 import {
@@ -6,12 +6,14 @@ import {
   setAccountModalVisible,
   setCartModualVisible,
 } from "../../redux/modalReducer";
+import { filterProduct } from "../../redux/productReducer";
 import { UserOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { useMediaQuery } from "react-responsive";
 import "./header.css";
 
 const Header = () => {
+  const [searchField, setSearchField] = useState("");
   const dispatch = useDispatch();
   const mobileDevice = useMediaQuery({ maxDeviceWidth: 820 });
   const { userID, isLoggedIn, isAdmin, cart } = useSelector(
@@ -63,15 +65,25 @@ const Header = () => {
     </Button>
   );
 
+  const handleChange = (e) => {
+    setSearchField(e.target.value);
+    //dispatch(filterProduct(setSearchField));
+  };
+
   return (
     <div className="header-container">
       <div id="management">
         {mobileDevice ? <p id="M">M</p> : <p id="Mgt">Management</p>}
-        <span>Chuwa</span>
+        <span>Shop</span>
       </div>
 
       <div className="search-bar">
-        <input placeholder="Search" />
+        <input
+          placeholder="Search products"
+          type="search"
+          value={searchField}
+          onChange={(e) => handleChange(e)}
+        />
       </div>
 
       <div className="signin-button">

@@ -70,8 +70,15 @@ export const productSlice = createSlice({
   name: "product",
   initialState: {
     product: [],
+    filteredProduct: [],
   },
-  reducers: {},
+  reducers: {
+    filterProduct: (state, action) => {
+      state.filteredProduct = state.product.filter((item) => {
+        return item.name.toLowerCase().includes(action.payload);
+      });
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(loadProducts.pending, (state, action) => {
@@ -126,5 +133,5 @@ export const productSlice = createSlice({
   },
 });
 
-export const {} = productSlice.actions;
+export const { filterProduct } = productSlice.actions;
 export default productSlice.reducer;

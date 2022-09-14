@@ -7,7 +7,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import "./products.css";
 
 const Products = ({ cartQty, setCartQty, setCartSum }) => {
-  const { isAdmin, cart } = useSelector((state) => state.user);
+  const { isAdmin } = useSelector((state) => state.user);
   const product = useSelector((state) => state.product.product);
   const isLoading = useSelector((state) => state.product.loading);
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ const Products = ({ cartQty, setCartQty, setCartSum }) => {
     );
   }
 
-  console.log(product);
+  // console.log(product);
   const productList = product.map((product) => {
     return (
       <ProductCard
@@ -42,7 +42,7 @@ const Products = ({ cartQty, setCartQty, setCartSum }) => {
   if (isLoading) {
     return (
       <div>
-        {console.log("is loading")}
+        {/* {console.log("is loading")} */}
         <LoadingOutlined />
       </div>
     );
