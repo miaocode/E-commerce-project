@@ -1,3 +1,6 @@
+.footer {
+  flex: 0 0 auto;
+}
 footer {
   color: white;
   background-color: #111827;

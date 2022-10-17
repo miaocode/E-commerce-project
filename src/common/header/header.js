@@ -71,30 +71,32 @@ const Header = () => {
   };
 
   return (
-    <div className="header-container">
-      <div id="management">
-        {mobileDevice ? <p id="M">M</p> : <p id="Mgt">Management</p>}
-        <span>Shop</span>
-      </div>
-
-      <div className="search-bar">
-        <input
-          placeholder="Search products"
-          type="search"
-          value={searchField}
-          onChange={(e) => handleChange(e)}
-        />
-      </div>
-
-      <div className="signin-button">
-        {isLoggedIn ? signOutButton : signInButton}
-      </div>
-      <div className="total-amount">
-        <div onClick={handleClick}>
-          <ShoppingCartOutlined />
+    <div className="header">
+      <div className="header-container">
+        <div id="management">
+          {mobileDevice ? <p id="M">M</p> : <p id="Mgt">Management</p>}
+          <span>Shop</span>
         </div>
-        {mobileDevice ? <></> : <span id="cartQty">{cartQantity}</span>}
-        <div id="cartAmount">${cartAmount.toFixed(2)}</div>
+
+        <div className="search-bar">
+          <input
+            placeholder="Search products"
+            type="search"
+            value={searchField}
+            onChange={(e) => handleChange(e)}
+          />
+        </div>
+
+        <div className="signin-button">
+          {isLoggedIn ? signOutButton : signInButton}
+        </div>
+        <div className="total-amount">
+          <div onClick={handleClick}>
+            <ShoppingCartOutlined />
+          </div>
+          {mobileDevice ? <></> : <span id="cartQty">{cartQantity}</span>}
+          <div id="cartAmount">${cartAmount.toFixed(2)}</div>
+        </div>
       </div>
     </div>
   );
